@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { MainHeader, MainFooter } from "@/components/constructionsBlocks";
@@ -21,7 +22,10 @@ export default function RootLayout({
         <div className="flex w-flex min-h-screen w-full flex-col ">
           <MainHeader />
           <main className="flex justify-center flex-1 p-4 md:p-10 bg-destructive/10">
-            <div className="w-3/4">{children}</div>
+            <div className="w-3/4">
+              {children}
+              <SpeedInsights />
+            </div>
           </main>
           <MainFooter />
         </div>
