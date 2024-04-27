@@ -1,18 +1,14 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
   provider = "prisma-client-js"
   engineType = "library"
 }
 
+
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  url = env("DATABASE_URL") 
+  directUrl = env("POSTGRES_URL_NON_POOLING") 
 }
 
 model Sections {
@@ -24,13 +20,49 @@ model Sections {
   updateDate DateTime @updatedAt
 }
 
-
-
-model Topicos {
+model Topics {
   id Int @id @default(autoincrement())
   parent_slug String  
-  content  String  
+  content  ContentTopics[]  
   createDate DateTime @default(now())
   updateDate DateTime @updatedAt
 }
+
+model ContentTopics {
+  id Int @id @default(autoincrement())
+  title String
+  page String
+  topics Topics[]
+  createDate DateTime @default(now())
+  updateDate DateTime @updatedAt
+}
+
+model QuestionsAsks {
+  id Int @id @default(autoincrement())
+  page String
+  content ContentQuestionsAsks[]
+}
+
+model ContentQuestionsAsks {
+  id Int @id @default(autoincrement())
+  pergunta String
+  resposta Asks[]
+  questionsAsks QuestionsAsks[]
+}
+
+model Asks {
+  id Int @id @default(autoincrement())
+  pergunta String
+  resposta ContentAsks[]
+  contentQuestionsAsks ContentQuestionsAsks[]
+}
+
+model ContentAsks {
+  id Int @id @default(autoincrement())
+  text String
+  asks Asks[]
+}
+
+
+
 
