@@ -50,6 +50,25 @@ export async function PATCH(req: Request) {
   } catch (error) {
     Response.json({
       error:
+        "Houve algum erro ao realizar a operação de PATCH junto ao prisma.",
+    });
+  }
+}
+
+export async function DELETE(req: Request) {
+  if (req.method !== "DELETE") {
+    return new Response("Method not allowed", { status: 405 });
+  }
+  try {
+    const body = await req.json();
+
+    const user = await prisma.sections.delete({
+      where: { id: body.id },
+    });
+    return Response.json(user);
+  } catch (error) {
+    Response.json({
+      error:
         "Houve algum erro ao realizar a operação de DELETE junto ao prisma.",
     });
   }

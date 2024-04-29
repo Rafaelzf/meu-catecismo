@@ -1,5 +1,5 @@
 export type Section = {
-  id: string;
+  id: number;
   title: string;
   slug: string;
   active: boolean;
