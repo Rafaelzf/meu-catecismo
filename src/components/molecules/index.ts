@@ -1,3 +1,4 @@
 import PageSections from "./sections";
+import SectionsListAdmin from "./sectionsListAdmin";
 
-export { PageSections };
+export { PageSections, SectionsListAdmin };

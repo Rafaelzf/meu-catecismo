@@ -1,7 +1,4 @@
-import Image from "next/image";
-import { MoreHorizontal, PlusCircle } from "lucide-react";
-
-import { Badge } from "@/components/ui/badge";
+import { PlusCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -12,12 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { SectionsListAdmin } from "@/components/molecules";
 
 export default function Admin() {
   return (
@@ -49,53 +41,7 @@ export default function Admin() {
             <div>última atualização</div>
             <div>Ação</div>
           </header>
-          <main className="text-sm text-orange-800">
-            <div className="grid grid-cols-5 gap-4 place-items-center text-center py-2 border-t-[1px] border-primary">
-              <div className="font-semibold">Laser Lemonade Machine</div>
-              <div>
-                <Badge className="bg-zinc-400">Inativo</Badge>
-              </div>
-              <div>09/10/2023</div>
-              <div>09/10/2023</div>
-              <div>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button aria-haspopup="true" size="icon" variant="ghost">
-                      <MoreHorizontal className="h-4 w-4" />
-                      <span className="sr-only">Toggle menu</span>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem>Edit</DropdownMenuItem>
-                    <DropdownMenuItem>Delete</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-5 gap-4 place-items-center text-center py-2 border-t-[1px] border-primary">
-              <div className="font-semibold">Laser Lemonade Machine</div>
-              <div>
-                <Badge className="bg-emerald-500">Ativo</Badge>
-              </div>
-              <div>09/10/2023</div>
-              <div>09/10/2023</div>
-              <div>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button aria-haspopup="true" size="icon" variant="ghost">
-                      <MoreHorizontal className="h-4 w-4" />
-                      <span className="sr-only">Toggle menu</span>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem>Edit</DropdownMenuItem>
-                    <DropdownMenuItem>Delete</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-            </div>
-          </main>
+          <SectionsListAdmin />
         </main>
       </CardContent>
       <CardFooter>
