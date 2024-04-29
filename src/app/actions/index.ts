@@ -1,15 +1,18 @@
 import axios from "axios";
 
 export const instance = axios.create({
-  baseURL: `${process.env.LOCAL_URL}`,
+  baseURL: `${process.env.BASE_URL}`,
 });
 
 export async function getSections() {
   try {
     const response = await instance.get("/sections");
     return response.data;
-  } catch (error) {
-    throw new Error("Could not get sections");
+  } catch (error: any) {
+    throw new Error(
+      "Ocorreu algum erro na tentativa de obter as secoes.",
+      error.message
+    );
   }
 }
 
