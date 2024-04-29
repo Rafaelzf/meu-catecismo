@@ -1,7 +1,7 @@
 import axios from "axios";
-
+import { SendSection } from "@/components/molecules/sections/types";
 export const instance = axios.create({
-  baseURL: `${process.env.BASE_URL}`,
+  baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}`,
 });
 
 export async function getSections() {
@@ -16,13 +16,17 @@ export async function getSections() {
   }
 }
 
-export async function createNewSection() {
+export async function createNewSection(params: SendSection) {
+  if (!params) return;
+
   try {
-    const response = await instance.post("/sections", {
-      firstName: "Santos",
-      lastName: "Dumont",
+    const numeroAleatorio = Math.floor(Math.random() * 100) + 1;
+    const response = await instance.post(`/sections`, {
+      title: params.title + numeroAleatorio,
+      slug: params.slug + numeroAleatorio,
+      message: params.message,
     });
-    return console.log(response.data);
+    return Response.json(response);
   } catch (error) {
     throw new Error("Could not create new section");
   }

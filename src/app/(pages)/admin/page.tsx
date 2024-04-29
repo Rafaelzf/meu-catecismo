@@ -1,6 +1,3 @@
-import { PlusCircle } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -10,6 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { SectionsListAdmin } from "@/components/molecules";
+import ButtonCreate from "@/components/atoms/buttonCreate";
 
 export default function Admin() {
   return (
@@ -20,17 +18,7 @@ export default function Admin() {
           <CardDescription>Crie, edite ou delete suas seções.</CardDescription>
         </div>
 
-        <div>
-          <Button
-            size="sm"
-            className="h-8 gap-1 bg-primary hover:bg-destructive"
-          >
-            <PlusCircle className="h-3.5 w-3.5" />
-            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-              Add seção
-            </span>
-          </Button>
-        </div>
+        <ButtonCreate />
       </CardHeader>
       <CardContent>
         <main className="border border-primary rounded-md">

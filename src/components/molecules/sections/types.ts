@@ -1,10 +1,17 @@
-export type Sections = {
+export type Section = {
   id: string;
   title: string;
   slug: string;
   active: boolean;
   message: string;
   icon?: null;
-  createDate: string;
-  updateDate: string;
+  createDate?: string;
+  updateDate?: string;
+};
+
+export type SendSection = {
+  title: string;
+  slug: string;
+  message: string;
+  icon?: null;
 };
