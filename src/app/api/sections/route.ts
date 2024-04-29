@@ -9,14 +9,14 @@ export async function GET() {
   return Response.json(allSections);
 }
 
-export async function POST(req: Request) {
-  const body = await req.json();
+// export async function POST(req: Request) {
+//   const body = await req.json();
 
-  const user = await prisma.sections.create({
-    data: body,
-  });
-  return Response.json(user);
-}
+//   const user = await prisma.sections.create({
+//     data: body,
+//   });
+//   return Response.json(user);
+// }
 
 async function init() {
   const resultCreate = await prisma.sections.create({
