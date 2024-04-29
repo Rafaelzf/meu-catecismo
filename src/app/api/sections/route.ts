@@ -4,7 +4,6 @@ import { withAccelerate } from "@prisma/extension-accelerate";
 const prisma = new PrismaClient().$extends(withAccelerate());
 export async function GET() {
   const allSections = await prisma.sections.findMany();
-  await prisma.$disconnect();
   allSections.length === 0 && (await init());
 
   return Response.json(allSections);
@@ -30,3 +29,13 @@ async function init() {
   });
   return resultCreate;
 }
+
+GET()
+  .then(async () => {
+    await prisma.$disconnect();
+  })
+  .catch(async (e) => {
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });
