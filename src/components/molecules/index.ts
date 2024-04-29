@@ -1,3 +1,3 @@
-import Sections from "./sections";
+import PageSections from "./sections";
 
-export { Sections };
+export { PageSections };

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Sections } from "@/components/molecules";
+import { PageSections } from "@/components/molecules";
 
 export default function Home() {
   return (
@@ -25,7 +25,7 @@ export default function Home() {
           popular e de uso uniforme por todos os católicos.
         </p>
       </div>
-      <Sections />
+      <PageSections />
     </>
   );
 }
