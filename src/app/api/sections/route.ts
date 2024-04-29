@@ -3,20 +3,37 @@ import { PrismaClient } from "@prisma/client";
 import { withAccelerate } from "@prisma/extension-accelerate";
 const prisma = new PrismaClient().$extends(withAccelerate());
 export async function GET() {
-  const allSections = await prisma.sections.findMany();
-  allSections.length === 0 && (await init());
+  try {
+    const allSections = await prisma.sections.findMany();
+    allSections.length === 0 && (await init());
 
-  return Response.json(allSections);
+    return Response.json(allSections);
+  } catch (error) {
+    Response.json({
+      error:
+        "Houve algum erro ao realizar a operação de busca de seções junto ao prisma.",
+    });
+  }
 }
 
-// export async function POST(req: Request) {
-//   const body = await req.json();
+export async function POST(req: Request) {
+  if (req.method !== "POST") {
+    return new Response("Method not allowed", { status: 405 });
+  }
 
-//   const user = await prisma.sections.create({
-//     data: body,
-//   });
-//   return Response.json(user);
-// }
+  try {
+    const body = await req.json();
+    const user = await prisma.sections.create({
+      data: body,
+    });
+    return Response.json(user);
+  } catch (error) {
+    Response.json({
+      error:
+        "Houve algum erro ao realizar a operação de criação junto ao prisma.",
+    });
+  }
+}
 
 async function init() {
   const resultCreate = await prisma.sections.create({

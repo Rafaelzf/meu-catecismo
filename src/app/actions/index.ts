@@ -10,7 +10,7 @@ export async function getSections() {
     return response.data;
   } catch (error: any) {
     throw new Error(
-      "Ocorreu algum erro na tentativa de obter as secoes.",
+      "Ocorreu algum erro na tentativa de obter as seções.",
       error.message
     );
   }
