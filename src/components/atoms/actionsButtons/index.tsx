@@ -11,8 +11,14 @@ interface Props {
 }
 
 export function ActionsButtons({ id }: Props) {
-  const handleDeleteClick = async () => await deleteSection(id);
-  const handleDisableClick = async () => await disabeSection(id);
+  const handleDeleteClick = async () => {
+    await deleteSection(id);
+    window.location.reload();
+  };
+  const handleDisableClick = async () => {
+    await disabeSection(id);
+    window.location.reload();
+  };
 
   return (
     <>
