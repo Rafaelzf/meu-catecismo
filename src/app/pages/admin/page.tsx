@@ -19,7 +19,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function Admin() {
+export default function Admin() {
   return (
     <Card>
       <CardHeader className="flex flex-row justify-between content-center">
@@ -106,5 +106,3 @@ export function Admin() {
     </Card>
   );
 }
-
-export default Admin;
