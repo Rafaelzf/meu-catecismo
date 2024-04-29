@@ -35,6 +35,26 @@ export async function POST(req: Request) {
   }
 }
 
+export async function PATCH(req: Request) {
+  if (req.method !== "PATCH") {
+    return new Response("Method not allowed", { status: 405 });
+  }
+  try {
+    const body = await req.json();
+
+    const user = await prisma.sections.update({
+      where: { id: body.id },
+      data: { active: false },
+    });
+    return Response.json(user);
+  } catch (error) {
+    Response.json({
+      error:
+        "Houve algum erro ao realizar a operação de DELETE junto ao prisma.",
+    });
+  }
+}
+
 async function init() {
   const resultCreate = await prisma.sections.create({
     data: {
@@ -46,13 +66,3 @@ async function init() {
   });
   return resultCreate;
 }
-
-GET()
-  .then(async () => {
-    await prisma.$disconnect();
-  })
-  .catch(async (e) => {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
-  });

@@ -15,18 +15,20 @@ model Sections {
   slug       String   @unique
   message    String
   icon       String?
+  active     Boolean  @default(true)
   createDate DateTime @default(now())
   updateDate DateTime @updatedAt
 }
 
 model Topics {
-  id         Int             @id @default(autoincrement())
-  parentSlug String?
-  content    Json[]
+  id              Int      @id @default(autoincrement())
+  parentSlug      String?
+  content         Json[]
   parentSectionId Int?
-  image      Bytes?
-  createDate DateTime        @default(now())
-  updateDate DateTime        @updatedAt
+  image           Bytes?
+  active          Boolean  @default(true)
+  createDate      DateTime @default(now())
+  updateDate      DateTime @updatedAt
 }
 
 model ContentTopics {
@@ -40,19 +42,18 @@ model ContentTopics {
 }
 
 model PageParticularTopic {
-  id         Int             @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   page       String
   content    Json[]
-  createDate DateTime        @default(now())
-  updateDate DateTime        @updatedAt
+  createDate DateTime @default(now())
+  updateDate DateTime @updatedAt
 }
 
 model QuestionsAsks {
-  id                    Int                  @id @default(autoincrement())
+  id                    Int      @id @default(autoincrement())
   pergunta              String
   resposta              Json[]
   pageParticularTopicId Int?
-  createDate            DateTime             @default(now())
-  updateDate            DateTime             @updatedAt
+  createDate            DateTime @default(now())
+  updateDate            DateTime @updatedAt
 }
-

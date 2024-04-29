@@ -16,7 +16,7 @@ export default async function PageSections() {
   return (
     <div className="gap-10 sm:gap-4 grid sm:grid-cols-1  md:grid-cols-3 ">
       {sections &&
-        sections.map((section: Sections) => (
+        sections.map((section: Sections) => {
           <Card key={section.id}>
             <CardHeader>
               <CardTitle className="flex justify-start gap-2 items-center">
@@ -37,8 +37,8 @@ export default async function PageSections() {
                 Ler sobre
               </Button>
             </CardFooter>
-          </Card>
-        ))}
+          </Card>;
+        })}
     </div>
   );
 }
