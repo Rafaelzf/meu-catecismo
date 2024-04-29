@@ -1,68 +1,58 @@
-
 generator client {
-  provider = "prisma-client-js"
+  provider   = "prisma-client-js"
   engineType = "library"
 }
 
-
 datasource db {
-  provider = "postgresql"
-  url = env("DATABASE_URL") 
-  directUrl = env("POSTGRES_URL_NON_POOLING") 
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model Sections {
-  id Int @id @default(autoincrement())
-  title String  
-  slug  String  
-  message String
+  id         Int      @id @default(autoincrement())
+  title      String
+  slug       String   @unique
+  message    String
+  icon       String?
   createDate DateTime @default(now())
   updateDate DateTime @updatedAt
 }
 
 model Topics {
-  id Int @id @default(autoincrement())
-  parent_slug String  
-  content  ContentTopics[]  
-  createDate DateTime @default(now())
-  updateDate DateTime @updatedAt
+  id         Int             @id @default(autoincrement())
+  parentSlug String?
+  content    Json[]
+  parentSectionId Int?
+  image      Bytes?
+  createDate DateTime        @default(now())
+  updateDate DateTime        @updatedAt
 }
 
 model ContentTopics {
-  id Int @id @default(autoincrement())
-  title String
-  page String
-  topics Topics[]
-  createDate DateTime @default(now())
-  updateDate DateTime @updatedAt
+  id            Int      @id @default(autoincrement())
+  title         String
+  page          String
+  parentTopicId Int?
+  image         Bytes?
+  createDate    DateTime @default(now())
+  updateDate    DateTime @updatedAt
+}
+
+model PageParticularTopic {
+  id         Int             @id @default(autoincrement())
+  page       String
+  content    Json[]
+  createDate DateTime        @default(now())
+  updateDate DateTime        @updatedAt
 }
 
 model QuestionsAsks {
-  id Int @id @default(autoincrement())
-  page String
-  content ContentQuestionsAsks[]
+  id                    Int                  @id @default(autoincrement())
+  pergunta              String
+  resposta              Json[]
+  pageParticularTopicId Int?
+  createDate            DateTime             @default(now())
+  updateDate            DateTime             @updatedAt
 }
-
-model ContentQuestionsAsks {
-  id Int @id @default(autoincrement())
-  pergunta String
-  resposta Asks[]
-  questionsAsks QuestionsAsks[]
-}
-
-model Asks {
-  id Int @id @default(autoincrement())
-  pergunta String
-  resposta ContentAsks[]
-  contentQuestionsAsks ContentQuestionsAsks[]
-}
-
-model ContentAsks {
-  id Int @id @default(autoincrement())
-  text String
-  asks Asks[]
-}
-
-
-
 

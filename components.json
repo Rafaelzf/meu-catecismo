@@ -6,9 +6,9 @@
   "tailwind": {
     "config": "tailwind.config.ts",
     "css": "src/app/globals.css",
-    "baseColor": "",
+    "baseColor": "slate",
     "cssVariables": false,
-    "prefix": "--tw"
+    "prefix": ""
   },
   "aliases": {
     "components": "@/components",

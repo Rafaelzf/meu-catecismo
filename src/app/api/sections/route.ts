@@ -4,15 +4,22 @@ import { withAccelerate } from "@prisma/extension-accelerate";
 const prisma = new PrismaClient().$extends(withAccelerate());
 export async function GET() {
   const allSections = await prisma.sections.findMany();
-
-  if (allSections.length === 0) {
-    await create();
-  }
+  allSections.length === 0 && (await init());
 
   return Response.json(allSections);
 }
 
-async function create() {
+export async function POST(req: Request) {
+  const body = await req.json();
+
+  const user = await prisma.sections.create({
+    data: body,
+  });
+  console.log(user);
+  return Response.json(user);
+}
+
+async function init() {
   const resultCreate = await prisma.sections.create({
     data: {
       title: "Noções essênciais",

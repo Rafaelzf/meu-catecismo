@@ -1,15 +1,6 @@
 import Link from "next/link";
-import { Speech } from "lucide-react";
+import { Sections } from "@/components/molecules";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 export default function Home() {
   return (
     <>
@@ -34,94 +25,7 @@ export default function Home() {
           popular e de uso uniforme por todos os católicos.
         </p>
       </div>
-      <div className="gap-10 sm:gap-4 grid sm:grid-cols-1  md:grid-cols-3 ">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex justify-start gap-2 items-center">
-              <div className="rounded-full bg-primary text-primary-foreground h-10 w-10 flex justify-center items-center">
-                <Speech className="h-6 w-6" />
-              </div>
-              <p className="scroll-m-20 text-lg font-semibold tracking-tight  text-orange-800">
-                Noções essênciais
-              </p>
-            </CardTitle>
-            <CardDescription className="leading-6">
-              Onde estão expostas fórmulas e verdades da doutrina católica que
-              todo católico deve saber de cor;
-            </CardDescription>
-          </CardHeader>
-
-          <CardFooter>
-            <Button className="w-full bg-primary text-primary-foreground hover:bg-destructive">
-              Ler sobre
-            </Button>
-          </CardFooter>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Card title</CardTitle>
-            <CardDescription>Card description</CardDescription>
-          </CardHeader>
-
-          <CardFooter>
-            <Button className="w-full bg-primary text-primary-foreground hover:bg-destructive">
-              Ler sobre
-            </Button>
-          </CardFooter>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Card title</CardTitle>
-            <CardDescription>Card description</CardDescription>
-          </CardHeader>
-
-          <CardFooter>
-            <Button className="w-full bg-primary text-primary-foreground hover:bg-destructive">
-              Ler sobre
-            </Button>
-          </CardFooter>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Card title</CardTitle>
-            <CardDescription>Card description</CardDescription>
-          </CardHeader>
-
-          <CardFooter>
-            <Button className="w-full bg-primary text-primary-foreground hover:bg-destructive">
-              Ler sobre
-            </Button>
-          </CardFooter>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Card title</CardTitle>
-            <CardDescription>Card description</CardDescription>
-          </CardHeader>
-
-          <CardFooter>
-            <Button className="w-full bg-primary text-primary-foreground hover:bg-destructive">
-              Ler sobre
-            </Button>
-          </CardFooter>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Card title</CardTitle>
-            <CardDescription>Card description</CardDescription>
-          </CardHeader>
-          <CardFooter>
-            <Button className="w-full bg-primary text-primary-foreground hover:bg-destructive">
-              Ler sobre
-            </Button>
-          </CardFooter>
-        </Card>
-      </div>
+      <Sections />
     </>
   );
 }
