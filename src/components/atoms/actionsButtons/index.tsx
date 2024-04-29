@@ -4,21 +4,24 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import { deleteSection } from "@/app/actions";
+import { deleteSection, disabeSection } from "@/app/actions";
 
 interface Props {
   id: number;
 }
 
 export function ActionsButtons({ id }: Props) {
-  const handleClick = async () => await deleteSection(id);
+  const handleDeleteClick = async () => await deleteSection(id);
+  const handleDisableClick = async () => await disabeSection(id);
 
   return (
     <>
       <DropdownMenuContent align="end">
         <DropdownMenuItem>Edit</DropdownMenuItem>
-        <DropdownMenuItem onClick={handleClick}>Delete</DropdownMenuItem>
-        <DropdownMenuItem>Disable</DropdownMenuItem>
+        <DropdownMenuItem onClick={handleDeleteClick}>Delete</DropdownMenuItem>
+        <DropdownMenuItem onClick={handleDisableClick}>
+          Disable
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </>
   );

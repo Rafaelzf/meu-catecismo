@@ -32,6 +32,15 @@ export async function createNewSection(params: SendSection) {
   }
 }
 
+export async function disabeSection(id: number) {
+  try {
+    const response = await instance.patch(`/sections`, { id: id });
+    return response.data;
+  } catch (error) {
+    throw new Error("Could not disable section");
+  }
+}
+
 export async function deleteSection(id: number) {
   try {
     const response = await instance.delete(`/sections`, { data: { id } });

@@ -9,7 +9,7 @@ export async function GET() {
 
     return Response.json(allSections);
   } catch (error) {
-    Response.json({
+    return Response.json({
       error:
         "Houve algum erro ao realizar a operação de busca de seções junto ao prisma.",
     });
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
     });
     return Response.json(user);
   } catch (error) {
-    Response.json({
+    return Response.json({
       error:
         "Houve algum erro ao realizar a operação de criação junto ao prisma.",
     });
@@ -41,14 +41,13 @@ export async function PATCH(req: Request) {
   }
   try {
     const body = await req.json();
-
     const user = await prisma.sections.update({
       where: { id: body.id },
       data: { active: false },
     });
     return Response.json(user);
   } catch (error) {
-    Response.json({
+    return Response.json({
       error:
         "Houve algum erro ao realizar a operação de PATCH junto ao prisma.",
     });
@@ -67,7 +66,7 @@ export async function DELETE(req: Request) {
     });
     return Response.json(user);
   } catch (error) {
-    Response.json({
+    return Response.json({
       error:
         "Houve algum erro ao realizar a operação de DELETE junto ao prisma.",
     });
