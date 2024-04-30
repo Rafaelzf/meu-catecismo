@@ -32,9 +32,9 @@ export async function createNewSection(params: SendSection) {
   }
 }
 
-export async function disabeSection(id: number) {
+export async function changeStatus(id: number, isEnable: boolean) {
   try {
-    const response = await instance.patch(`/sections`, { id: id });
+    const response = await instance.patch(`/sections`, { id, isEnable });
     return response.data;
   } catch (error) {
     throw new Error("Could not disable section");

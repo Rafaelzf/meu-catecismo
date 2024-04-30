@@ -4,30 +4,37 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import { deleteSection, disabeSection } from "@/app/actions";
+import { deleteSection, changeStatus } from "@/app/actions";
 
 interface Props {
   id: number;
+  active: boolean;
 }
 
-export function ActionsButtons({ id }: Props) {
-  const handleDeleteClick = async () => {
+export function ActionsButtons({ id, active }: Props) {
+  async function handleDeleteClick() {
     await deleteSection(id);
     window.location.reload();
-  };
-  const handleDisableClick = async () => {
-    await disabeSection(id);
+  }
+  async function handleChangeStatusClick(isEnable: boolean) {
+    await changeStatus(id, isEnable);
     window.location.reload();
-  };
+  }
 
   return (
     <>
       <DropdownMenuContent align="end">
         <DropdownMenuItem>Edit</DropdownMenuItem>
         <DropdownMenuItem onClick={handleDeleteClick}>Delete</DropdownMenuItem>
-        <DropdownMenuItem onClick={handleDisableClick}>
-          Disable
-        </DropdownMenuItem>
+        {active ? (
+          <DropdownMenuItem onClick={() => handleChangeStatusClick(false)}>
+            Disable
+          </DropdownMenuItem>
+        ) : (
+          <DropdownMenuItem onClick={() => handleChangeStatusClick(true)}>
+            Enable
+          </DropdownMenuItem>
+        )}
       </DropdownMenuContent>
     </>
   );

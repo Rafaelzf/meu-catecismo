@@ -43,7 +43,7 @@ export async function PATCH(req: Request) {
     const body = await req.json();
     const user = await prisma.sections.update({
       where: { id: body.id },
-      data: { active: false },
+      data: { active: body.isEnable },
     });
     return Response.json(user);
   } catch (error) {

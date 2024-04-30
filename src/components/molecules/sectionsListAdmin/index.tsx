@@ -41,7 +41,7 @@ export async function SectionsListAdmin() {
                       <span className="sr-only">Toggle menu</span>
                     </Button>
                   </DropdownMenuTrigger>
-                  <ActionsButtons id={+id} />
+                  <ActionsButtons id={+id} active={active} />
                 </DropdownMenu>
               </div>
             </div>
