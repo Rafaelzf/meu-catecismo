@@ -2,12 +2,21 @@ export const dynamic = "force-dynamic"; // defaults to auto
 import { PrismaClient } from "@prisma/client";
 import { withAccelerate } from "@prisma/extension-accelerate";
 const prisma = new PrismaClient().$extends(withAccelerate());
+
+const corsSettings = {
+  status: 200,
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  },
+};
 export async function GET() {
   try {
     const allSections = await prisma.sections.findMany();
     allSections.length === 0 && (await init());
 
-    return Response.json(allSections);
+    return Response.json(allSections, corsSettings);
   } catch (error) {
     return Response.json({
       error:
@@ -26,7 +35,7 @@ export async function POST(req: Request) {
     const user = await prisma.sections.create({
       data: body,
     });
-    return Response.json(user);
+    return Response.json(user, corsSettings);
   } catch (error) {
     return Response.json({
       error:
@@ -45,7 +54,7 @@ export async function PATCH(req: Request) {
       where: { id: body.id },
       data: { active: body.isEnable },
     });
-    return Response.json(user);
+    return Response.json(user, corsSettings);
   } catch (error) {
     return Response.json({
       error:
@@ -64,7 +73,7 @@ export async function DELETE(req: Request) {
     const user = await prisma.sections.delete({
       where: { id: body.id },
     });
-    return Response.json(user);
+    return Response.json(user, corsSettings);
   } catch (error) {
     return Response.json({
       error:
