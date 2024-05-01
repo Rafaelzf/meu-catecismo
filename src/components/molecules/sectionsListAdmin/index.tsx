@@ -13,13 +13,11 @@ import { getSections } from "@/app/actions";
 import { Section } from "../sections/types";
 import { convertDate } from "@/lib/utils";
 import useSWR from "swr";
+import useSWRMutation from "swr/mutation";
+
 export function SectionsListAdmin() {
-  const {
-    data: sections,
-    error,
-    isLoading,
-    mutate,
-  } = useSWR("sections", getSections);
+  const { data: sections, error, isLoading } = useSWR("sections", getSections);
+  const { trigger, isMutating } = useSWRMutation("sections", getSections);
 
   if (error)
     return (
@@ -32,7 +30,11 @@ export function SectionsListAdmin() {
 
   if (!error && !isLoading && sections && sections.length > 0)
     return (
-      <main className="border border-primary rounded-md">
+      <main
+        className={`border border-primary rounded-md  ${
+          isMutating && "bg-amber-300"
+        }`}
+      >
         <header className="grid grid-cols-5 gap-4 place-items-center text-center py-4 text-sm text-zinc-500 dark:text-zinc-400 ">
           <div>Nome</div>
           <div>Status</div>
@@ -68,7 +70,7 @@ export function SectionsListAdmin() {
                     <ActionsButtons
                       id={+id}
                       active={active}
-                      mutateData={mutate}
+                      trigger={trigger}
                     />
                   </DropdownMenu>
                 </div>

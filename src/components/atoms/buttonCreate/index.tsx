@@ -3,10 +3,12 @@ import { PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SendSection } from "@/components/molecules/sections/types";
 import { createNewSection } from "@/app/actions/";
-import { useSWRConfig } from "swr";
+import useSWRMutation from "swr/mutation";
+import { getSections } from "@/app/actions";
 
 export function ButtonCreate() {
-  const { mutate } = useSWRConfig();
+  const { trigger, isMutating } = useSWRMutation("sections", getSections);
+
   const handleClick = async () => {
     const fakeData: SendSection = {
       title: "Titulo teste 2",
@@ -14,7 +16,7 @@ export function ButtonCreate() {
       slug: "slug_teste3",
     };
     await createNewSection(fakeData);
-    mutate("sections");
+    trigger();
   };
   return (
     <div>
@@ -22,6 +24,7 @@ export function ButtonCreate() {
         size="sm"
         className="h-8 gap-1 bg-primary hover:bg-destructive"
         onClick={handleClick}
+        disabled={isMutating}
       >
         <PlusCircle className="h-3.5 w-3.5" />
         <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
