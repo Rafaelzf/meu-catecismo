@@ -14,11 +14,9 @@ interface Props {
 export function ActionsButtons({ id, active }: Props) {
   async function handleDeleteClick() {
     await deleteSection(id);
-    window.location.reload();
   }
   async function handleChangeStatusClick(isEnable: boolean) {
     await changeStatus(id, isEnable);
-    window.location.reload();
   }
 
   return (

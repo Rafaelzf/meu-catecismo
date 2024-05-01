@@ -12,7 +12,6 @@ export function ButtonCreate() {
       slug: "slug_teste3",
     };
     await createNewSection(fakeData);
-    window.location.reload();
   };
   return (
     <div>
