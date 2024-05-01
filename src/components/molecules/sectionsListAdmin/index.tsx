@@ -1,9 +1,8 @@
+"use client";
 import { MoreHorizontal } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
@@ -12,12 +11,19 @@ import { ActionsButtons } from "@/components/atoms";
 import { getSections } from "@/app/actions";
 import { Section } from "../sections/types";
 import { convertDate } from "@/lib/utils";
-export async function SectionsListAdmin() {
-  const sections = await getSections();
-  return (
-    <main className="text-sm text-orange-800">
-      {sections &&
-        sections.map(
+import useSWR from "swr";
+export function SectionsListAdmin() {
+  const { data: sections, error, isLoading } = useSWR("/sections", getSections);
+
+  if (error)
+    return <main className="text-sm text-orange-800">falhou ao carregar</main>;
+  if (isLoading)
+    return <main className="text-sm text-orange-800">carregando...</main>;
+
+  if (!error && !isLoading && sections && sections.length > 0)
+    return (
+      <main className="text-sm text-orange-800">
+        {sections.map(
           ({ id, title, active, createDate, updateDate }: Section) => (
             <div
               key={id}
@@ -47,8 +53,8 @@ export async function SectionsListAdmin() {
             </div>
           )
         )}
-    </main>
-  );
+      </main>
+    );
 }
 
 export default SectionsListAdmin;

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { SendSection } from "@/components/molecules/sections/types";
 import { createNewSection } from "@/app/actions/";
 
+
 export function ButtonCreate() {
   const handleClick = async () => {
     const fakeData: SendSection = {

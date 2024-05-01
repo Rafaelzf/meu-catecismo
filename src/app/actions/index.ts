@@ -26,6 +26,7 @@ export async function createNewSection(params: SendSection) {
       slug: params.slug + numeroAleatorio,
       message: params.message,
     });
+
     return Response.json(response);
   } catch (error) {
     throw new Error("Could not create new section");
