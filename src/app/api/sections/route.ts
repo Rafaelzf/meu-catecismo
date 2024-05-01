@@ -7,7 +7,7 @@ const corsSettings = {
   status: 200,
   headers: {
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
   },
 };
@@ -15,7 +15,7 @@ export async function GET() {
   try {
     const allSections = await prisma.sections.findMany();
     allSections.length === 0 && (await init());
-
+    console.log("get");
     return Response.json(allSections, corsSettings);
   } catch (error) {
     return Response.json({
@@ -54,6 +54,7 @@ export async function PATCH(req: Request) {
       where: { id: body.id },
       data: { active: body.isEnable },
     });
+    console.log("Patch");
     return Response.json(user, corsSettings);
   } catch (error) {
     return Response.json({
@@ -73,6 +74,7 @@ export async function DELETE(req: Request) {
     const user = await prisma.sections.delete({
       where: { id: body.id },
     });
+    console.log("Delete");
     return Response.json(user, corsSettings);
   } catch (error) {
     return Response.json({
