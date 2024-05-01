@@ -3,9 +3,10 @@ import { PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SendSection } from "@/components/molecules/sections/types";
 import { createNewSection } from "@/app/actions/";
-
+import { useSWRConfig } from "swr";
 
 export function ButtonCreate() {
+  const { mutate } = useSWRConfig();
   const handleClick = async () => {
     const fakeData: SendSection = {
       title: "Titulo teste 2",
@@ -13,6 +14,7 @@ export function ButtonCreate() {
       slug: "slug_teste3",
     };
     await createNewSection(fakeData);
+    mutate("sections");
   };
   return (
     <div>

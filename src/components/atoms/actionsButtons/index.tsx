@@ -9,14 +9,17 @@ import { deleteSection, changeStatus } from "@/app/actions";
 interface Props {
   id: number;
   active: boolean;
+  mutateData: () => Promise<void>;
 }
 
-export function ActionsButtons({ id, active }: Props) {
+export function ActionsButtons({ id, active, mutateData }: Props) {
   async function handleDeleteClick() {
     await deleteSection(id);
+    await mutateData();
   }
   async function handleChangeStatusClick(isEnable: boolean) {
     await changeStatus(id, isEnable);
+    await mutateData();
   }
 
   return (
