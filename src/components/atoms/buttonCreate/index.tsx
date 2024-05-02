@@ -1,6 +1,7 @@
 "use client";
 import { PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import { SendSection } from "@/components/molecules/sections/types";
 import { createNewSection } from "@/app/actions/";
 import useSWRMutation from "swr/mutation";
@@ -8,6 +9,7 @@ import { getSections } from "@/app/actions";
 
 export function ButtonCreate() {
   const { trigger, isMutating } = useSWRMutation("sections", getSections);
+  const { toast } = useToast();
 
   const handleClick = async () => {
     const fakeData: SendSection = {
@@ -15,8 +17,13 @@ export function ButtonCreate() {
       message: "message teste 2",
       slug: "slug_teste3",
     };
-    await createNewSection(fakeData);
-    trigger();
+    const response = await createNewSection(fakeData);
+    await trigger();
+    if (response?.status === 200) {
+      toast({
+        title: "Seção criada com sucesso",
+      });
+    }
   };
   return (
     <div>

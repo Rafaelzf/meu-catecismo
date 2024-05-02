@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Inter } from "next/font/google";
+import { Toaster } from "@/components/ui/toaster";
 import { MainHeader, MainFooter } from "@/components/organisms";
 import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
@@ -29,6 +30,7 @@ export default function RootLayout({
           </main>
           <MainFooter />
         </div>
+        <Toaster />
       </body>
     </html>
   );

@@ -5,20 +5,24 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"; 
+} from "@/components/ui/card";
+
 import { SectionsListAdmin } from "@/components/molecules";
 import ButtonCreate from "@/components/atoms/buttonCreate";
 
 export default function Admin() {
   return (
     <Card>
-      <CardHeader className="flex flex-row justify-between content-center">
-        <div>
-          <CardTitle className="text-orange-800">Seções</CardTitle>
-          <CardDescription>Crie, edite ou delete suas seções.</CardDescription>
+      <CardHeader>
+        <div className="flex flex-row justify-between content-center">
+          <div>
+            <CardTitle className="text-orange-800 mb-3">Seções</CardTitle>
+            <CardDescription>
+              Crie, edite ou delete suas seções.
+            </CardDescription>
+          </div>
+          <ButtonCreate />
         </div>
-
-        <ButtonCreate />
       </CardHeader>
       <CardContent>
         <SectionsListAdmin />
