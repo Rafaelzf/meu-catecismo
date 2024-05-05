@@ -6,7 +6,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { deleteSection, changeStatus } from "@/app/actions";
 import { useToast } from "@/components/ui/use-toast";
-import { EditSection } from "@/components/organisms";
 
 interface Props {
   id: number;
