@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { deleteSection, changeStatus } from "@/app/actions";
 import { useToast } from "@/components/ui/use-toast";
+import { EditSection } from "@/components/organisms";
 
 interface Props {
   id: number;
@@ -15,7 +16,6 @@ interface Props {
 
 export function ActionsButtons({ id, active, trigger }: Props) {
   const { toast } = useToast();
-
   async function handleDeleteClick() {
     await deleteSection(id);
     await trigger();

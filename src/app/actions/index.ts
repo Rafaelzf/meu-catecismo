@@ -20,10 +20,9 @@ export async function createNewSection(params: SendSection) {
   if (!params) return;
 
   try {
-    const numeroAleatorio = Math.floor(Math.random() * 100) + 1;
     const response = await instance.post(`/sections`, {
-      title: params.title + numeroAleatorio,
-      slug: params.slug + numeroAleatorio,
+      title: params.title,
+      slug: params.slug,
       message: params.message,
     });
 

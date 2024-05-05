@@ -26,7 +26,11 @@ export function SectionsListAdmin() {
       </main>
     );
   if (isLoading)
-    return <main className="text-sm text-orange-800">carregando...</main>;
+    return (
+      <main className="flex justify-center items-center">
+        <Loader2 className="animate-spin size-[40px] text-primary " />
+      </main>
+    );
 
   if (!error && !isLoading && sections && sections.length > 0)
     return (
