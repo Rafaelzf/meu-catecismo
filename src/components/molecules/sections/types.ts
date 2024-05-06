@@ -11,7 +11,7 @@ export type Section = {
 
 export type SendSection = {
   title: string;
-  slug: string;
+  slug?: string;
   message: string;
   icon?: null;
 };
