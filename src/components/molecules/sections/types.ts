@@ -10,8 +10,12 @@ export type Section = {
 };
 
 export type SendSection = {
+  id?: number;
+  createDate?: string;
+  updateDate?: string;
   title: string;
   slug?: string;
+  active?: boolean;
   message: string;
   icon?: null;
 };

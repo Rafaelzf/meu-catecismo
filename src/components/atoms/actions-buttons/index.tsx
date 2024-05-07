@@ -4,46 +4,48 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import { deleteSection, changeStatus } from "@/app/actions";
-import { useToast } from "@/components/ui/use-toast";
+
+import { useContext } from "react";
+import Sectioncontext from "@/app/store/sections-context";
+import { ActionsFormSectionsEnums } from "@/enums";
 
 interface Props {
   id: number;
+  title: string;
+  message: string;
   active: boolean;
   trigger: () => Promise<void>;
 }
 
-export function ActionsButtons({ id, active, trigger }: Props) {
-  const { toast } = useToast();
+export function ActionsButtons({ id, title, message, active, trigger }: Props) {
+  const { setShowModal, setInfoSection } = useContext(Sectioncontext);
+
   async function handleDeleteClick() {
-    await deleteSection(id);
-    await trigger();
-    toast({
-      title: "Seção deleteda sucesso",
-    });
+    setInfoSection((infoSection) => ({
+      ...infoSection,
+      id: id,
+      sectionType: ActionsFormSectionsEnums.DeleteSection,
+    }));
+    setShowModal(true);
   }
-  async function handleChangeStatusClick(isEnable: boolean) {
-    await changeStatus(id, isEnable);
-    await trigger();
-    toast({
-      title: "Status alterado com sucesso",
-    });
-  }
+
+  const handleEditClick = async () => {
+    setInfoSection((infoSection) => ({
+      ...infoSection,
+      id: id,
+      title: title,
+      message: message,
+      active: active,
+      sectionType: ActionsFormSectionsEnums.EditSection,
+    }));
+    setShowModal(true);
+  };
 
   return (
     <>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem>Edit</DropdownMenuItem>
+        <DropdownMenuItem onClick={handleEditClick}>Edit</DropdownMenuItem>
         <DropdownMenuItem onClick={handleDeleteClick}>Delete</DropdownMenuItem>
-        {active ? (
-          <DropdownMenuItem onClick={() => handleChangeStatusClick(false)}>
-            Disable
-          </DropdownMenuItem>
-        ) : (
-          <DropdownMenuItem onClick={() => handleChangeStatusClick(true)}>
-            Enable
-          </DropdownMenuItem>
-        )}
       </DropdownMenuContent>
     </>
   );

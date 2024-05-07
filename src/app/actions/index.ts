@@ -32,19 +32,28 @@ export async function createNewSection(params: SendSection) {
   }
 }
 
-export async function changeStatus(id: number, isEnable: boolean) {
+export async function editSection(sendData: SendSection) {
+  const { id, title, message, active } = sendData;
+  if (!id || active === null || active === undefined || !title || !message)
+    return;
   try {
-    const response = await instance.patch(`/sections`, { id, isEnable });
-    return response.data;
+    const response = await instance.patch(`/sections`, {
+      id,
+      title,
+      message,
+      active,
+    });
+    return response;
   } catch (error) {
     throw new Error("Could not disable section");
   }
 }
 
-export async function deleteSection(id: number) {
+export async function deleteSection(id?: number) {
+  if (!id) return;
   try {
     const response = await instance.delete(`/sections`, { data: { id } });
-    return response.data;
+    return response;
   } catch (error) {
     throw new Error("Could not delete section");
   }

@@ -9,23 +9,38 @@ import {
 } from "@/components/ui/dialog";
 
 import { Sectioncontext } from "@/app/store/sections-context";
-import { FormCreateSection } from "../";
-
+import { FormCreateSection, FormEditSection, FormDeleteSection } from "../";
+import { ActionsFormSectionsEnums } from "@/enums";
 function ModalSection() {
-  const { showModal, setShowModal } = useContext(Sectioncontext);
+  const { showModal, setShowModal, infoSection } = useContext(Sectioncontext);
   const closeModal = () => setShowModal(false);
 
   return (
     <Dialog open={showModal} onOpenChange={closeModal}>
       <DialogContent className="sm:max-w-[40%]">
         <DialogHeader>
-          <DialogTitle className="text-orange-800">Editar seção</DialogTitle>
-          <DialogDescription>
-            Faça alterações em sua seção aqui. Clique em salvar quando terminar.
-          </DialogDescription>
+          <DialogTitle className="text-orange-800">
+            {infoSection.sectionType ===
+              ActionsFormSectionsEnums.CreateSection && "Criar seção"}
+            {infoSection.sectionType === ActionsFormSectionsEnums.EditSection &&
+              "Editar seção"}
+          </DialogTitle>
+          {infoSection.sectionType === ActionsFormSectionsEnums.EditSection && (
+            <DialogDescription>
+              Faça alterações em sua seção aqui. Clique em salvar ou cancelar
+              quando terminar.
+            </DialogDescription>
+          )}
         </DialogHeader>
-
-        <FormCreateSection />
+        {infoSection.sectionType === ActionsFormSectionsEnums.CreateSection && (
+          <FormCreateSection />
+        )}
+        {infoSection.sectionType === ActionsFormSectionsEnums.EditSection && (
+          <FormEditSection />
+        )}
+        {infoSection.sectionType === ActionsFormSectionsEnums.DeleteSection && (
+          <FormDeleteSection />
+        )}
       </DialogContent>
     </Dialog>
   );

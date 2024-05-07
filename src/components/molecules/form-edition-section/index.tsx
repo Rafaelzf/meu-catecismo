@@ -16,43 +16,47 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { createFormSchema } from "./schema";
+import { editFormSchema } from "./schema";
 import { SendSection } from "../sections/types";
-import { createNewSection, getSections } from "@/app/actions";
+import { getSections, editSection } from "@/app/actions";
 import Sectioncontext from "@/app/store/sections-context";
 import useSWRMutation from "swr/mutation";
 import { toast } from "@/components/ui/use-toast";
+import { Switch } from "@/components/ui/switch";
 
-function FormCreateSection() {
-  const { setShowModal } = useContext(Sectioncontext);
+function FormEditSection() {
+  const { setShowModal, infoSection } = useContext(Sectioncontext);
   const { trigger } = useSWRMutation("sections", getSections);
-  const formSchema = z.object(createFormSchema);
+  const formSchema = z.object(editFormSchema);
 
   const createform = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      message: "",
+      title: infoSection?.title || "",
+      message: infoSection?.message || "",
+      active: infoSection?.active || false,
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const { title, message } = values;
+    const { title, message, active } = values;
     if (!title || !message) return;
 
     const sendData: SendSection = {
+      id: infoSection?.id,
       title,
       message,
-      slug: `${title.toLowerCase()}_${message.toLowerCase()}`,
+      active: active,
     };
 
-    const response = await createNewSection(sendData);
+    const response = await editSection(sendData);
     await trigger();
     setShowModal(false);
+
     const respTitle =
       response?.status === 200
-        ? { title: "Seção criada com sucesso" }
-        : { title: "Ocorreu algum erro ao criar a seção" };
+        ? { title: "Seção editada com sucesso" }
+        : { title: "Ocorreu algum erro ao editar a seção" };
     toast(respTitle);
   }
   return (
@@ -68,6 +72,27 @@ function FormCreateSection() {
                 <Input placeholder="Título" {...field} />
               </FormControl>
               <FormDescription>Escreva o título da seção.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={createform.control}
+          name="active"
+          render={({ field }) => (
+            <FormItem className="flex justify-start items-center gap-4 w-8">
+              <FormLabel
+                className={field.value ? "text-emerald-500" : "text-zinc-400"}
+              >
+                {field.value ? "Ativo" : "Inativo"}
+              </FormLabel>
+              <FormControl>
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
@@ -101,7 +126,6 @@ function FormCreateSection() {
           >
             cancelar
           </Button>
-
           {createform.formState.isSubmitting ? (
             <Button className="bg-primary hover:bg-destructive w-1/4" disabled>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -112,7 +136,7 @@ function FormCreateSection() {
               type="submit"
               className="bg-primary hover:bg-destructive w-1/4"
             >
-              Criar
+              Editar
             </Button>
           )}
         </div>
@@ -121,4 +145,4 @@ function FormCreateSection() {
   );
 }
 
-export default FormCreateSection;
+export default FormEditSection;

@@ -52,9 +52,8 @@ export async function PATCH(req: Request) {
     const body = await req.json();
     const user = await prisma.sections.update({
       where: { id: body.id },
-      data: { active: body.isEnable },
+      data: { title: body.title, message: body.message, active: body.active },
     });
-    console.log("Patch");
     return Response.json(user, corsSettings);
   } catch (error) {
     return Response.json({

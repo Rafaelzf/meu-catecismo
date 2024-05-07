@@ -9,6 +9,7 @@ export const Sectioncontext = createContext<PropsSectionTypes>({
   showModal: false,
   setShowModal: () => {},
   infoSection: {
+    id: undefined,
     sectionType: undefined,
     title: undefined,
     slug: undefined,
@@ -24,8 +25,9 @@ export function SectioncontextProvider({
 }: SectioncontextProviderProps) {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [infoSection, setInfoSection] = useState<InfoSectionType>({
+    id: undefined,
     sectionType: undefined,
-    title: undefined,
+    title: undefined,       
     slug: undefined,
     message: undefined,
     image: undefined,

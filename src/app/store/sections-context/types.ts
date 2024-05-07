@@ -1,4 +1,5 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
+import { ActionsFormSectionsEnums } from "@/enums";
 
 export type PropsSectionTypes = {
   infoSection: InfoSectionType;
@@ -8,12 +9,13 @@ export type PropsSectionTypes = {
 };
 
 export type InfoSectionType = {
-  sectionType: string | undefined;
-  title: string | undefined;
-  slug: string | undefined;
-  message: string | undefined;
-  image: string | undefined;
-  active: boolean | undefined;
+  sectionType?: ActionsFormSectionsEnums;
+  id?: number;
+  title?: string;
+  slug?: string;
+  message?: string;
+  image?: string;
+  active?: boolean;
 };
 
 export interface SectioncontextProviderProps {
