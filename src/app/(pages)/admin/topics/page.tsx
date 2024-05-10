@@ -25,8 +25,6 @@ export default function TopicsAdmin() {
     getContentTopics(id)
   );
 
-  console.log(data);
-
   return (
     <>
       <ModalSection />
@@ -48,7 +46,7 @@ export default function TopicsAdmin() {
               <TriangleAlert className="h-4 w-4" />
               <AlertTitle>Error</AlertTitle>
               <AlertDescription>
-                "Ocorreu algum erro na tentativa de obter os tópicos. 🙁"
+                Ocorreu algum erro na tentativa de obter os tópicos. 🙁
               </AlertDescription>
             </Alert>
           </CardContent>
