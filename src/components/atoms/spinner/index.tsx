@@ -1,6 +1,6 @@
 "use client";
 import useSWRMutation from "swr/mutation";
-import { getSections } from "@/app/actions";
+import { getSections } from "@/app/actions/sections";
 import { Loader2 } from "lucide-react";
 export function Spinner() {
   const { isMutating } = useSWRMutation("sections", getSections);

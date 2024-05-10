@@ -11,7 +11,7 @@ datasource db {
 
 model Sections {
   id         Int      @id @default(autoincrement())
-  title      String
+  title      String   @unique
   slug       String   @unique
   message    String
   icon       String?
@@ -23,27 +23,26 @@ model Sections {
 model Topics {
   id              Int      @id @default(autoincrement())
   parentSlug      String?
-  content         Json[]
   parentSectionId Int?
-  image           Bytes?
-  active          Boolean  @default(true)
+  content         Json?
   createDate      DateTime @default(now())
   updateDate      DateTime @updatedAt
 }
 
 model ContentTopics {
   id            Int      @id @default(autoincrement())
-  title         String
-  page          String
+  title         String   @unique
+  page          String   @unique
   parentTopicId Int?
   image         Bytes?
+  active        Boolean  @default(true)
   createDate    DateTime @default(now())
   updateDate    DateTime @updatedAt
 }
 
 model PageParticularTopic {
   id         Int      @id @default(autoincrement())
-  page       String
+  page       String   @unique
   content    Json[]
   createDate DateTime @default(now())
   updateDate DateTime @updatedAt
@@ -51,7 +50,7 @@ model PageParticularTopic {
 
 model QuestionsAsks {
   id                    Int      @id @default(autoincrement())
-  pergunta              String
+  pergunta              String   @unique
   resposta              Json[]
   pageParticularTopicId Int?
   createDate            DateTime @default(now())

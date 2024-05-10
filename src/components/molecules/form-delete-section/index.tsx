@@ -2,9 +2,9 @@
 import { useContext } from "react";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import { getSections } from "@/app/actions";
+import { getSections } from "@/app/actions/sections";
 import Sectioncontext from "@/app/store/sections-context";
-import { deleteSection } from "@/app/actions";
+import { deleteSection } from "@/app/actions/sections";
 import useSWRMutation from "swr/mutation";
 import { toast } from "@/components/ui/use-toast";
 

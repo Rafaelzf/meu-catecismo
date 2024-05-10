@@ -58,3 +58,15 @@ export async function deleteSection(id?: number) {
     throw new Error("Could not delete section");
   }
 }
+
+export async function getContentTopic() {
+  try {
+    const response = await instance.get("/topics/contentTopics");
+    return response.data;
+  } catch (error: any) {
+    throw new Error(
+      "Ocorreu algum erro na tentativa de obter do conteúdo dos tópicos.",
+      error.message
+    );
+  }
+}

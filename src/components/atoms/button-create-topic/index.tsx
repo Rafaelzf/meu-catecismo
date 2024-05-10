@@ -7,7 +7,7 @@ import { getSections } from "@/app/actions/sections";
 import { Sectioncontext } from "@/app/store/sections-context";
 import { ActionsFormSectionsEnums } from "@/enums";
 
-export function ButtonCreate() {
+export function ButtonCreateTopic() {
   const { isMutating } = useSWRMutation("sections", getSections);
   const { setShowModal, setInfoSection } = useContext(Sectioncontext);
 
@@ -29,11 +29,11 @@ export function ButtonCreate() {
       >
         <PlusCircle className="h-3.5 w-3.5" />
         <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-          Add seção
+          Add tópico(s)
         </span>
       </Button>
     </div>
   );
 }
 
-export default ButtonCreate;
+export default ButtonCreateTopic;

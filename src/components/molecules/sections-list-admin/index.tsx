@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
-import { MoreHorizontal, Loader2 } from "lucide-react";
+import { MoreHorizontal, Loader2, TriangleAlert } from "lucide-react";
+
 import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
@@ -9,21 +10,26 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { ActionsButtons } from "@/components/atoms";
-import { getSections } from "@/app/actions";
+import { getSections } from "@/app/actions/sections";
 
 import { Section } from "../sections/types";
 import { convertDate } from "@/lib/utils";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 export function SectionsListAdmin() {
   const { data: sections, error, isLoading } = useSWR("sections", getSections);
   const { trigger } = useSWRMutation("sections", getSections);
 
   if (error)
     return (
-      <main className="text-sm text-orange-800">
-        "Ocorreu algum erro na tentativa de obter as seções. 🙁"
-      </main>
+      <Alert variant="destructive">
+        <TriangleAlert className="h-4 w-4" />
+        <AlertTitle>Error</AlertTitle>
+        <AlertDescription>
+          "Ocorreu algum erro na tentativa de obter as seções. 🙁"
+        </AlertDescription>
+      </Alert>
     );
   if (isLoading)
     return (

@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { editFormSchema } from "./schema";
 import { SendSection } from "../sections/types";
-import { getSections, editSection } from "@/app/actions";
+import { getSections, editSection } from "@/app/actions/sections";
 import Sectioncontext from "@/app/store/sections-context";
 import useSWRMutation from "swr/mutation";
 import { toast } from "@/components/ui/use-toast";

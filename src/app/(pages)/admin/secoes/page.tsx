@@ -9,14 +9,14 @@ import {
 } from "@/components/ui/card";
 
 import { SectionsListAdmin } from "@/components/molecules";
-import ButtonCreate from "@/components/atoms/button-create";
+import ButtonCreate from "@/components/atoms/button-create-topic";
 
 const ModalSection = dynamic(
   () => import("@/components/molecules/modal-section"),
   { ssr: false }
 );
 
-export default function Admin() {
+export default function SectionsAdmin() {
   return (
     <>
       <ModalSection />

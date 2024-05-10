@@ -14,8 +14,8 @@ export const editFormSchema = {
     .min(10, {
       message: "A mensagem deve conter no mínimo 10 caracteres.",
     })
-    .max(50, {
-      message: "A mensagem deve conter no máximo 50 caracteres.",
+    .max(100, {
+      message: "A mensagem deve conter no máximo 100 caracteres.",
     }),
   active: z.boolean(),
 };

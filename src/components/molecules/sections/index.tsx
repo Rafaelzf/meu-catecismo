@@ -8,7 +8,7 @@ import {
 import { Speech } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section } from "./types";
-import { getSections } from "@/app/actions";
+import { getSections } from "@/app/actions/sections";
 
 export default async function PageSections() {
   const sections = await getSections();

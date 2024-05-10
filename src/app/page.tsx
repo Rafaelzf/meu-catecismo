@@ -3,7 +3,7 @@ import { PageSections } from "@/components/molecules";
 import { revalidatePath } from "next/cache";
 
 export default function Home() {
-  revalidatePath("/");
+  revalidatePath("/", "layout");
   return (
     <>
       <div className="flex flex-col justify-center gap-4 mb-16 mt-10 text-center">
