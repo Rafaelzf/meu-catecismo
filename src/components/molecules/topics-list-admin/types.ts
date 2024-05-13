@@ -9,6 +9,15 @@ export type ContentTopics = {
   updateDate?: string;
 };
 
+export type PropsDataTopics = {
+  data: PropsContentTopics;
+};
+
 export type PropsContentTopics = {
-  data: ContentTopics[];
+  id?: number;
+  parentSlug?: string;
+  parentSectionId?: number;
+  content: ContentTopics[];
+  createDate?: string;
+  updateDate?: string;
 };

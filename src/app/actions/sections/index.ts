@@ -1,5 +1,6 @@
 import axios from "axios";
 import { SendSection } from "@/components/molecules/sections/types";
+import slugify from "slugify";
 export const instance = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}`,
 });
@@ -22,7 +23,7 @@ export async function createNewSection(params: SendSection) {
   try {
     const response = await instance.post(`/sections`, {
       title: params.title,
-      slug: params.slug,
+      slug: slugify(params.title, { lower: true }),
       message: params.message,
     });
 

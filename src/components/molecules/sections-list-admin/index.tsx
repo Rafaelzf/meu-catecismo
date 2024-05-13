@@ -1,6 +1,5 @@
-/* eslint-disable react/no-unescaped-entities */
 "use client";
-import { MoreHorizontal, Loader2, TriangleAlert } from "lucide-react";
+import { MoreHorizontal, Bug, TriangleAlert } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import {
@@ -9,7 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Button } from "@/components/ui/button";
-import { ActionsButtons } from "@/components/atoms";
+import { ActionsButtons, Skeleton } from "@/components/atoms";
 import { getSections } from "@/app/actions/sections";
 
 import { Section } from "../sections/types";
@@ -27,14 +26,14 @@ export function SectionsListAdmin() {
         <TriangleAlert className="h-4 w-4" />
         <AlertTitle>Error</AlertTitle>
         <AlertDescription>
-          "Ocorreu algum erro na tentativa de obter as seções. 🙁"
+          "Ocorreu algum erro na tentativa de obter as seções. <Bug />"
         </AlertDescription>
       </Alert>
     );
   if (isLoading)
     return (
       <main className="flex justify-center items-center">
-        <Loader2 className="animate-spin size-[40px] text-primary " />
+        <Skeleton size="lg" />
       </main>
     );
 

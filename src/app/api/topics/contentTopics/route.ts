@@ -1,7 +1,6 @@
 export const dynamic = "force-dynamic"; // defaults to auto
 import { PrismaClient } from "@prisma/client";
 import { withAccelerate } from "@prisma/extension-accelerate";
-import { ContentType } from "../types";
 const prisma = new PrismaClient().$extends(withAccelerate());
 
 const corsSettings = {
@@ -19,7 +18,6 @@ export async function GET(req: Request) {
   }
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");
-  console.log(id);
   try {
     let allContentTopics;
     if (id === null) {

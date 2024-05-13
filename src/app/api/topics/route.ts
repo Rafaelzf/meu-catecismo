@@ -12,10 +12,27 @@ const corsSettings = {
   },
 };
 
-export async function GET() {
+export async function GET(req: Request) {
+  if (req.method !== "GET") {
+    return new Response("Method not allowed", { status: 405 });
+  }
+
+  const { searchParams } = new URL(req.url);
+  const id = searchParams.get("id");
+
   try {
-    const allTopics = await prisma.topics.findMany();
-    allTopics.length === 0 && (await init());
+    let allTopics;
+
+    if (id === null || id === undefined) {
+      console.log("deu ruim", id);
+      allTopics = await prisma.topics.findMany();
+    } else {
+      console.log("deu certo", id);
+      allTopics = await prisma.topics.findMany({
+        where: { parentSectionId: Number(id) },
+      });
+    }
+
     return Response.json(allTopics, corsSettings);
   } catch (error) {
     return Response.json({
@@ -25,12 +42,31 @@ export async function GET() {
   }
 }
 
+export async function PATCH(req: Request) {
+  if (req.method !== "PATCH") {
+    return new Response("Method not allowed", { status: 405 });
+  }
+  try {
+    const body = await req.json();
+    const user = await prisma.topics.update({
+      where: { id: body.id },
+      data: { parentSectionId: 132 },
+    });
+    return Response.json(user, corsSettings);
+  } catch (error) {
+    return Response.json({
+      error:
+        "Houve algum erro ao realizar a operação de PATCH junto ao prisma.",
+    });
+  }
+}
+
 async function init() {
   try {
     const resultfistCreate = await prisma.topics.create({
       data: {
         parentSlug: "nocoes-essenciais",
-        parentSectionId: 130,
+        parentSectionId: 132,
       },
     });
 
@@ -94,13 +130,3 @@ export async function DELETE(req: Request) {
     });
   }
 }
-
-GET()
-  .then(async () => {
-    await prisma.$disconnect();
-  })
-  .catch(async (e) => {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
-  });

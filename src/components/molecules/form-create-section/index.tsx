@@ -1,5 +1,6 @@
 "use client";
 import { useContext } from "react";
+
 import { z } from "zod";
 import { Loader2 } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -43,7 +44,6 @@ function FormCreateSection() {
     const sendData: SendSection = {
       title,
       message,
-      slug: `${title.toLowerCase()}_${message.toLowerCase()}`,
     };
 
     const response = await createNewSection(sendData);

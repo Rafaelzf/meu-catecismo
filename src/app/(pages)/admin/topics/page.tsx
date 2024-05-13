@@ -6,13 +6,22 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { Loader2, TriangleAlert } from "lucide-react";
+
+import { Bug } from "lucide-react";
 import useSWR from "swr";
-import { getContentTopics } from "@/app/actions/contentTopics";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { getTopics } from "@/app/actions/topics";
 import { TopicsListAdmin } from "@/components/molecules";
-import { ButtonCreateTopic, HeaderTopics } from "@/components/atoms";
-import { useState } from "react";
+import {
+  ButtonCreateTopic,
+  HeaderTopics,
+  BoxError,
+  Skeleton,
+} from "@/components/atoms";
+import { useContext, useEffect, useState } from "react";
+
+import { getSections } from "@/app/actions/sections";
+import TopicsContext from "@/app/store/topics-context";
+import useSWRMutation from "swr/mutation";
 
 const ModalSection = dynamic(
   () => import("@/components/molecules/modal-section"),
@@ -20,42 +29,66 @@ const ModalSection = dynamic(
 );
 
 export default function TopicsAdmin() {
-  const [id, setId] = useState<number | undefined>();
-  const { data, error, isLoading } = useSWR("contentTopics", () =>
-    getContentTopics(id)
+  const { setSections, idSection } = useContext(TopicsContext);
+  const {
+    data: sections,
+    error: sectionError,
+    isLoading: sectionLoading,
+  } = useSWR("sections", getSections);
+
+  const { data, error, isValidating } = useSWR("topics", () =>
+    getTopics(idSection)
   );
+  const { trigger } = useSWRMutation("topics", () => getTopics());
+
+  if (!sectionLoading && !sectionLoading && sections && sections.length) {
+    setSections(sections);
+  }
+  const refetch = async () => await trigger();
+
+  useEffect(() => {
+    refetch();
+  }, [idSection]);
 
   return (
     <>
       <ModalSection />
       <Card>
         <CardHeader className="flex flex-row justify-between content-center">
-          <HeaderTopics />
-          <ButtonCreateTopic />
+          {sectionLoading && <Skeleton size="sm" />}
+          {sectionError && (
+            <BoxError>
+              Ocorreu algum erro na tentativa de obter as secoes. <Bug />
+            </BoxError>
+          )}
+
+          {!sectionLoading &&
+            !sectionError &&
+            sections &&
+            sections.length > 0 && (
+              <>
+                <HeaderTopics />
+                <ButtonCreateTopic />
+              </>
+            )}
         </CardHeader>
 
-        {isLoading && (
+        {isValidating && (
           <CardContent className="flex justify-center items-center">
-            <Loader2 className="animate-spin size-[40px] text-primary " />
+            <Skeleton size="lg" />
           </CardContent>
         )}
 
         {error && (
-          <CardContent>
-            <Alert variant="destructive">
-              <TriangleAlert className="h-4 w-4" />
-              <AlertTitle>Error</AlertTitle>
-              <AlertDescription>
-                Ocorreu algum erro na tentativa de obter os tópicos. 🙁
-              </AlertDescription>
-            </Alert>
-          </CardContent>
+          <BoxError>
+            Ocorreu algum erro na tentativa de obter os tópicos. <Bug />
+          </BoxError>
         )}
 
-        {!isLoading && !error && data && (
+        {!isValidating && !error && data && (
           <>
             <CardContent>
-              <TopicsListAdmin data={data} />
+              <TopicsListAdmin data={data[0]} />
             </CardContent>
             <CardFooter className="text-xs text-muted-foreground">
               Showing <strong>1-10</strong> of <strong>32</strong> products
