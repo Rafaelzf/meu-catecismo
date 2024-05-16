@@ -26,7 +26,7 @@ export function SectionsListAdmin() {
         <TriangleAlert className="h-4 w-4" />
         <AlertTitle>Error</AlertTitle>
         <AlertDescription>
-          "Ocorreu algum erro na tentativa de obter as seções. <Bug />"
+          Ocorreu algum erro na tentativa de obter as seções. <Bug />
         </AlertDescription>
       </Alert>
     );
