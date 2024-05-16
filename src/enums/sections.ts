@@ -1,5 +1,5 @@
-export enum ActionsFormSectionsEnums {
-  DeleteSection = "delete-section",
-  EditSection = "edit-section",
-  CreateSection = "create-section",
+export enum ActionsFormEnums {
+  Delete = "delete",
+  Edit = "edit",
+  Create = "create",
 }

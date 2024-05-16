@@ -1,3 +1,3 @@
-import { ActionsFormSectionsEnums } from "./sections";
+import { ActionsFormEnums } from "./sections";
 
-export { ActionsFormSectionsEnums };
+export { ActionsFormEnums };

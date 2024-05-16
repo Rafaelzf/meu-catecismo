@@ -5,17 +5,18 @@ import { Button } from "@/components/ui/button";
 import useSWRMutation from "swr/mutation";
 import { getSections } from "@/app/actions/sections";
 import { Sectioncontext } from "@/app/store/sections-context";
-import { ActionsFormSectionsEnums } from "@/enums";
+import { ActionsFormEnums } from "@/enums";
+import TopicsContext from "@/app/store/topics-context";
 
 export function ButtonCreateTopic() {
   const { isMutating } = useSWRMutation("sections", getSections);
-  const { setShowModal, setInfoSection } = useContext(Sectioncontext);
+  const { setShowModal } = useContext(TopicsContext);
 
   const handleClick = async () => {
-    setInfoSection((infoSection) => ({
-      ...infoSection,
-      sectionType: ActionsFormSectionsEnums.CreateSection,
-    }));
+    // setInfoSection((infoSection) => ({
+    //   ...infoSection,
+    //   sectionType: ActionsFormEnums.Create,
+    // }));
     setShowModal(true);
   };
 

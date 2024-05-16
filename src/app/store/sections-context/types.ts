@@ -1,5 +1,5 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
-import { ActionsFormSectionsEnums } from "@/enums";
+import { ActionsFormEnums } from "@/enums";
 
 export type PropsSectionTypes = {
   infoSection: InfoSectionType;
@@ -9,7 +9,7 @@ export type PropsSectionTypes = {
 };
 
 export type InfoSectionType = {
-  sectionType?: ActionsFormSectionsEnums;
+  sectionType?: ActionsFormEnums;
   id?: number;
   title?: string;
   slug?: string;

@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 
 import { SectionsListAdmin } from "@/components/molecules";
-import ButtonCreate from "@/components/atoms/button-create-topic";
+import ButtonCreate from "@/components/atoms/button-create";
 
 const ModalSection = dynamic(
   () => import("@/components/molecules/modal-section"),

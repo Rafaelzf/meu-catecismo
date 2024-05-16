@@ -33,7 +33,7 @@ export async function createNewSection(params: SendSection) {
   }
 }
 
-export async function editSection(sendData: SendSection) {
+export async function Edit(sendData: SendSection) {
   const { id, title, message, active } = sendData;
   if (!id || active === null || active === undefined || !title || !message)
     return;
@@ -50,24 +50,12 @@ export async function editSection(sendData: SendSection) {
   }
 }
 
-export async function deleteSection(id?: number) {
+export async function Delete(id?: number) {
   if (!id) return;
   try {
     const response = await instance.delete(`/sections`, { data: { id } });
     return response;
   } catch (error) {
     throw new Error("Could not delete section");
-  }
-}
-
-export async function getContentTopic() {
-  try {
-    const response = await instance.get("/topics/contentTopics");
-    return response.data;
-  } catch (error: any) {
-    throw new Error(
-      "Ocorreu algum erro na tentativa de obter do conteúdo dos tópicos.",
-      error.message
-    );
   }
 }

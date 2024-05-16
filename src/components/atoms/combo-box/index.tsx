@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import { useState, useEffect } from "react";
 import { ArrowUpDown, Check } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -30,17 +30,26 @@ export interface IItens {
 }
 
 export default function Combobox({ selects, handleOnChange }: ComboboxProps) {
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState({
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState({
     label: "",
     value: "",
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     handleOnChange &&
       value.value &&
       handleOnChange(Number(value.value), value.label);
   }, [value]);
+
+  useEffect(() => {
+    if (selects && selects.length && !value.value) {
+      setValue({
+        label: selects[0].label,
+        value: selects[0].value,
+      });
+    }
+  }, [selects]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

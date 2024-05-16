@@ -24,7 +24,7 @@ import Sectioncontext from "@/app/store/sections-context";
 import useSWRMutation from "swr/mutation";
 import { toast } from "@/components/ui/use-toast";
 
-function FormCreate() {
+function FormCreateTopic() {
   const { setShowModal } = useContext(Sectioncontext);
   const { trigger } = useSWRMutation("sections", getSections);
   const formSchema = z.object(createFormSchema);
@@ -121,4 +121,4 @@ function FormCreate() {
   );
 }
 
-export default FormCreate;
+export default FormCreateTopic;

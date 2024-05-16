@@ -15,9 +15,9 @@ export async function GET() {
   try {
     const allSections = await prisma.sections.findMany();
     allSections.length === 0 && (await init());
-    console.log("get");
     return Response.json(allSections, corsSettings);
   } catch (error) {
+    console.error(error);
     return Response.json({
       error:
         "Houve algum erro ao realizar a operação de busca de seções junto ao prisma.",
@@ -37,6 +37,7 @@ export async function POST(req: Request) {
     });
     return Response.json(user, corsSettings);
   } catch (error) {
+    console.error(error);
     return Response.json({
       error:
         "Houve algum erro ao realizar a operação de criação junto ao prisma.",
@@ -70,11 +71,20 @@ export async function DELETE(req: Request) {
   try {
     const body = await req.json();
 
-    const user = await prisma.sections.delete({
-      where: { id: body.id },
+    const deleteTopics = prisma.topic.deleteMany({
+      where: {
+        parentSectionId: body.id,
+      },
     });
-    console.log("Delete");
-    return Response.json(user, corsSettings);
+
+    const deleteUser = prisma.sections.delete({
+      where: {
+        id: body.id,
+      },
+    });
+    const transaction = await prisma.$transaction([deleteTopics, deleteUser]);
+
+    return Response.json(transaction, corsSettings);
   } catch (error) {
     return Response.json({
       error:
@@ -90,6 +100,13 @@ async function init() {
       slug: "nocoes-essenciais",
       message:
         "Onde estão expostas fórmulas e verdades da doutrina católica que todo católico deve saber de cor;",
+      topics: {
+        create: [
+          { title: "Deus", parentSlug: "nocoes-essenciais" },
+          { title: "Religião", parentSlug: "nocoes-essenciais" },
+          { title: "O homem", parentSlug: "nocoes-essenciais" },
+        ],
+      },
     },
   });
   return resultCreate;

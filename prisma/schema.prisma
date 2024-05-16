@@ -15,44 +15,51 @@ model Sections {
   slug       String   @unique
   message    String
   icon       String?
+  topics     Topic[]
   active     Boolean  @default(true)
   createDate DateTime @default(now())
   updateDate DateTime @updatedAt
 }
 
-model Topics {
-  id              Int      @id @default(autoincrement())
-  parentSlug      String?
+model Topic {
+  id              Int             @id @default(autoincrement())
+  parentSlug      String
+  title           String          @unique
+  section         Sections?       @relation(fields: [parentSectionId], references: [id])
   parentSectionId Int?
-  content         Json?
-  createDate      DateTime @default(now())
-  updateDate      DateTime @updatedAt
+  image           Bytes?
+  active          Boolean         @default(true)
+  content         QuestionsAsks[]
+  createDate      DateTime        @default(now())
+  updateDate      DateTime        @updatedAt
 }
 
-model ContentTopics {
-  id            Int      @id @default(autoincrement())
-  title         String   @unique
-  page          String   @unique
-  parentTopicId Int?
-  image         Bytes?
-  active        Boolean  @default(true)
-  createDate    DateTime @default(now())
-  updateDate    DateTime @updatedAt
-}
-
-model PageParticularTopic {
+model QuestionsAsks {
   id         Int      @id @default(autoincrement())
-  page       String   @unique
-  content    Json[]
+  question   String   @unique
+  ask        Json[]
+  topic      Topic?   @relation(fields: [topicId], references: [id])
+  topicId    Int?
   createDate DateTime @default(now())
   updateDate DateTime @updatedAt
 }
 
-model QuestionsAsks {
-  id                    Int      @id @default(autoincrement())
-  pergunta              String   @unique
-  resposta              Json[]
-  pageParticularTopicId Int?
-  createDate            DateTime @default(now())
-  updateDate            DateTime @updatedAt
-}
+// model ContentTopics {  
+//   id            Int      @id @default(autoincrement())
+//   title         String   @unique
+//   page          String   @unique
+//   topic         Topics   @relation(fields: [parentTopicId], references: [id])
+//   parentTopicId Int
+//   image         Bytes?
+//   active        Boolean  @default(true)
+//   createDate    DateTime @default(now())
+//   updateDate    DateTime @updatedAt
+// }
+
+// model PageParticularTopic {
+//   id         Int      @id @default(autoincrement())
+//   page       String   @unique
+//   content    Json[]
+//   createDate DateTime @default(now())
+//   updateDate DateTime @updatedAt
+// }

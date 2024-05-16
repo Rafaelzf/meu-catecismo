@@ -4,6 +4,8 @@ import { TopicsTypes, TopicscontextProviderProps } from "./types";
 import { InfoSectionType } from "../sections-context/types";
 
 export const TopicsContext = createContext<TopicsTypes>({
+  showModal: false,
+  setShowModal: () => {},
   idSection: undefined,
   setIdSection: () => {},
   sections: [],
@@ -13,8 +15,9 @@ export const TopicsContext = createContext<TopicsTypes>({
 export function TopicsContextProvider({
   children,
 }: TopicscontextProviderProps) {
+  const [showModal, setShowModal] = useState<boolean>(false);
   const [infoSection, setInfoSection] = useState<InfoSectionType[]>([]);
-  const [idSection, setIdSection] = useState<number>(132);
+  const [idSection, setIdSection] = useState<number>(12);
 
   return (
     <TopicsContext.Provider
@@ -23,6 +26,8 @@ export function TopicsContextProvider({
         setSections: setInfoSection,
         idSection,
         setIdSection,
+        showModal,
+        setShowModal,
       }}
     >
       {children}

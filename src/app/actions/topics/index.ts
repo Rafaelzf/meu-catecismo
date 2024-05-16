@@ -5,6 +5,7 @@ export const instance = axios.create({
 });
 
 export async function getTopics(id?: number) {
+  console.log(id);
   try {
     const response = await instance.get("/topics", {
       params: { id },

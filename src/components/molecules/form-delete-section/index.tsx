@@ -4,16 +4,16 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { getSections } from "@/app/actions/sections";
 import Sectioncontext from "@/app/store/sections-context";
-import { deleteSection } from "@/app/actions/sections";
+import { Delete } from "@/app/actions/sections";
 import useSWRMutation from "swr/mutation";
 import { toast } from "@/components/ui/use-toast";
 
-function FormDeleteSection() {
+function FormDelete() {
   const { setShowModal, infoSection } = useContext(Sectioncontext);
   const { trigger, isMutating } = useSWRMutation("sections", getSections);
 
   async function handleDeleteClick() {
-    const response = await deleteSection(infoSection?.id);
+    const response = await Delete(infoSection?.id);
     await trigger();
     setShowModal(false);
     const respTitle =
@@ -57,4 +57,4 @@ function FormDeleteSection() {
   );
 }
 
-export default FormDeleteSection;
+export default FormDelete;

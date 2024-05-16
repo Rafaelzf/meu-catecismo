@@ -7,7 +7,7 @@ import {
 
 import { useContext } from "react";
 import Sectioncontext from "@/app/store/sections-context";
-import { ActionsFormSectionsEnums } from "@/enums";
+import { ActionsFormEnums } from "@/enums";
 
 interface Props {
   id: number;
@@ -24,7 +24,7 @@ export function ActionsButtons({ id, title, message, active, trigger }: Props) {
     setInfoSection((infoSection) => ({
       ...infoSection,
       id: id,
-      sectionType: ActionsFormSectionsEnums.DeleteSection,
+      sectionType: ActionsFormEnums.Delete,
     }));
     setShowModal(true);
   }
@@ -36,7 +36,7 @@ export function ActionsButtons({ id, title, message, active, trigger }: Props) {
       title: title,
       message: message,
       active: active,
-      sectionType: ActionsFormSectionsEnums.EditSection,
+      sectionType: ActionsFormEnums.Edit,
     }));
     setShowModal(true);
   };

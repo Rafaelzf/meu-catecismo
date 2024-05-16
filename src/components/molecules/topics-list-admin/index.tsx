@@ -15,11 +15,11 @@ import { convertDate } from "@/lib/utils";
 
 import { PropsDataTopics } from "./types";
 
-export function TopicsListAdmin({ data }: PropsDataTopics) {
+export function TopicsListAdmin({ topics }: PropsDataTopics) {
   return (
     <>
-      {!data && <EmptyBox>****</EmptyBox>}
-      {data && (
+      {topics.length === 0 && <EmptyBox>****</EmptyBox>}
+      {topics.length > 0 && (
         <main className={`border border-primary rounded-md`}>
           <header className="grid grid-cols-5 gap-4 place-items-center text-center py-4 text-sm text-zinc-500 dark:text-zinc-400 ">
             <div>Nome</div>
@@ -29,7 +29,7 @@ export function TopicsListAdmin({ data }: PropsDataTopics) {
             {/* <div>Ação</div> */}
           </header>
           <main className="text-sm text-orange-800">
-            {data?.content.map((topic: Topic) => (
+            {topics.map((topic: Topic) => (
               <div
                 key={topic.id}
                 className="grid grid-cols-5 gap-4 place-items-center text-center py-2 border-t-[1px] border-primary"

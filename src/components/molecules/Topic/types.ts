@@ -1,10 +1,10 @@
 export type Topic = {
   id: number;
+  parentSlug: string;
   title: string;
-  page: string;
-  active: boolean;
+  parentSectionId: number;
   image?: null;
-  parentTopicId: number;
+  active: boolean;
   createDate?: string;
   updateDate?: string;
 };

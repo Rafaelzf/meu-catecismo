@@ -17,60 +17,40 @@ import {
   BoxError,
   Skeleton,
 } from "@/components/atoms";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 
-import { getSections } from "@/app/actions/sections";
 import TopicsContext from "@/app/store/topics-context";
 import useSWRMutation from "swr/mutation";
 
-const ModalSection = dynamic(
-  () => import("@/components/molecules/modal-section"),
-  { ssr: false }
-);
+const ModalTopic = dynamic(() => import("@/components/molecules/modal-topic"), {
+  ssr: false,
+});
 
 export default function TopicsAdmin() {
   const { setSections, idSection } = useContext(TopicsContext);
-  const {
-    data: sections,
-    error: sectionError,
-    isLoading: sectionLoading,
-  } = useSWR("sections", getSections);
 
   const { data, error, isValidating } = useSWR("topics", () =>
     getTopics(idSection)
   );
-  const { trigger } = useSWRMutation("topics", () => getTopics());
 
-  if (!sectionLoading && !sectionLoading && sections && sections.length) {
-    setSections(sections);
-  }
-  const refetch = async () => await trigger();
+  const { trigger } = useSWRMutation("topics", () => getTopics(idSection));
+  const refetch = useCallback(async () => await trigger(), [trigger]);
 
   useEffect(() => {
     refetch();
-  }, [idSection]);
+  }, [idSection, refetch]);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <>
-      <ModalSection />
+      <ModalTopic />
       <Card>
         <CardHeader className="flex flex-row justify-between content-center">
-          {sectionLoading && <Skeleton size="sm" />}
-          {sectionError && (
-            <BoxError>
-              Ocorreu algum erro na tentativa de obter as secoes. <Bug />
-            </BoxError>
-          )}
-
-          {!sectionLoading &&
-            !sectionError &&
-            sections &&
-            sections.length > 0 && (
-              <>
-                <HeaderTopics />
-                <ButtonCreateTopic />
-              </>
-            )}
+          <HeaderTopics />
+          <ButtonCreateTopic />
         </CardHeader>
 
         {isValidating && (
@@ -88,7 +68,7 @@ export default function TopicsAdmin() {
         {!isValidating && !error && data && (
           <>
             <CardContent>
-              <TopicsListAdmin data={data[0]} />
+              <TopicsListAdmin topics={data} />
             </CardContent>
             <CardFooter className="text-xs text-muted-foreground">
               Showing <strong>1-10</strong> of <strong>32</strong> products
