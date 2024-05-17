@@ -1,13 +1,18 @@
 "use client";
 import { CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { BoxError, Combobox, Skeleton } from "@/components/atoms";
+import {
+  BoxError,
+  ButtonCreateTopic,
+  Combobox,
+  Skeleton,
+} from "@/components/atoms";
 import { getSections } from "@/app/actions/sections";
 import { useContext } from "react";
 import TopicsContext from "@/app/store/topics-context";
 import useSWR from "swr";
 import { Bug } from "lucide-react";
 export default function HeaderTopics() {
-  const { setIdSection, idSection } = useContext(TopicsContext);
+  const { setIdSection, idSection, setSections } = useContext(TopicsContext);
   const { data, error, isValidating } = useSWR("sections", () => getSections());
 
   const sectionName =
@@ -21,6 +26,8 @@ export default function HeaderTopics() {
         label: section?.title || "",
       };
     });
+
+  data && setSections(data);
 
   async function handleOnChange(id: number) {
     if (!id) return;
@@ -38,15 +45,18 @@ export default function HeaderTopics() {
       )}
 
       {!isValidating && !error && data && (
-        <div>
-          <CardTitle className="text-orange-800 mb-10">
-            Tópicos ({sectionName?.title})
-          </CardTitle>
+        <>
+          <div className="flex flex-row justify-between content-center">
+            <CardTitle className="text-orange-800 mb-10">
+              Tópicos ({sectionName?.title})
+            </CardTitle>
+            <ButtonCreateTopic />
+          </div>
           <CardDescription>
             Escolha a secao:{" "}
             <Combobox selects={convertData} handleOnChange={handleOnChange} />
           </CardDescription>
-        </div>
+        </>
       )}
     </>
   );

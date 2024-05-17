@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Button } from "@/components/ui/button";
-import { ActionsButtons, EmptyBox } from "@/components/atoms";
+import { TopicActionsButtons, EmptyBox } from "@/components/atoms";
 
 import { Topic } from "../Topic/types";
 import { convertDate } from "@/lib/utils";
@@ -26,7 +26,7 @@ export function TopicsListAdmin({ topics }: PropsDataTopics) {
             <div>Status</div>
             <div>Data de criação</div>
             <div>última atualização</div>
-            {/* <div>Ação</div> */}
+            <div>Ação</div>
           </header>
           <main className="text-sm text-orange-800">
             {topics.map((topic: Topic) => (
@@ -52,7 +52,7 @@ export function TopicsListAdmin({ topics }: PropsDataTopics) {
                         <span className="sr-only">Toggle menu</span>
                       </Button>
                     </DropdownMenuTrigger>
-                    {/* <ActionsButtons {...section} trigger={trigger} /> */}
+                    <TopicActionsButtons id={topic.id} />
                   </DropdownMenu>
                 </div>
               </div>

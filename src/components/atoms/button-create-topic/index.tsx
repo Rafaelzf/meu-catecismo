@@ -3,20 +3,16 @@ import { useContext } from "react";
 import { PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import useSWRMutation from "swr/mutation";
-import { getSections } from "@/app/actions/sections";
-import { Sectioncontext } from "@/app/store/sections-context";
 import { ActionsFormEnums } from "@/enums";
 import TopicsContext from "@/app/store/topics-context";
+import { getTopics } from "@/app/actions/topics";
 
 export function ButtonCreateTopic() {
-  const { isMutating } = useSWRMutation("sections", getSections);
-  const { setShowModal } = useContext(TopicsContext);
+  const { isMutating } = useSWRMutation("topics", () => getTopics());
+  const { setShowModal, setAction } = useContext(TopicsContext);
 
   const handleClick = async () => {
-    // setInfoSection((infoSection) => ({
-    //   ...infoSection,
-    //   sectionType: ActionsFormEnums.Create,
-    // }));
+    setAction(ActionsFormEnums.Create);
     setShowModal(true);
   };
 

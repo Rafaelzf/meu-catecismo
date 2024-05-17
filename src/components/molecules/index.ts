@@ -7,6 +7,7 @@ import FormEdit from "./form-edition-section";
 import TopicsListAdmin from "./topics-list-admin";
 import FormCreateTopic from "./form-create-topic";
 import ModalTopic from "../molecules/modal-topic";
+import FormDeleteTopic from "./form-delete-topic";
 
 export {
   PageSections,
@@ -16,6 +17,7 @@ export {
   FormCreate,
   FormEdit,
   FormDelete,
+  FormDeleteTopic,
   TopicsListAdmin,
   FormCreateTopic,
 };

@@ -47,11 +47,16 @@ export async function POST(req: Request) {
 
     const resultCreate = await prisma.sections.update({
       where: {
-        id: body.sectionId,
+        id: body.parentSectionId,
       },
       data: {
         topics: {
-          create: [{ title: body.title, parentSlug: body.sectionSlug }],
+          create: [
+            {
+              title: body.title,
+              parentSlug: body.parentSlug,
+            },
+          ],
         },
       },
     });

@@ -1,11 +1,11 @@
 import axios from "axios";
-import { SendSection } from "@/components/molecules/sections/types";
+import { Topic } from "@/components/molecules/Topic/types";
+
 export const instance = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}`,
 });
 
 export async function getTopics(id?: number) {
-  console.log(id);
   try {
     const response = await instance.get("/topics", {
       params: { id },
@@ -19,14 +19,14 @@ export async function getTopics(id?: number) {
   }
 }
 
-export async function createNewTopic(params: SendSection) {
+export async function createNewTopic(params: Topic) {
   if (!params) return;
 
   try {
     const response = await instance.post(`/topics`, {
+      parentSectionId: params.parentSectionId,
       title: params.title,
-      slug: params.slug,
-      message: params.message,
+      parentSlug: params.parentSlug,
     });
 
     return Response.json(response);
@@ -35,22 +35,22 @@ export async function createNewTopic(params: SendSection) {
   }
 }
 
-export async function editTopic(sendData: SendSection) {
-  const { id, title, message, active } = sendData;
-  if (!id || active === null || active === undefined || !title || !message)
-    return;
-  try {
-    const response = await instance.patch(`/topics`, {
-      id,
-      title,
-      message,
-      active,
-    });
-    return response;
-  } catch (error) {
-    throw new Error("Could not disable topic");
-  }
-}
+// export async function editTopic(sendData: Topic) {
+//   const { id, title, message, active } = sendData;
+//   if (!id || active === null || active === undefined || !title || !message)
+//     return;
+//   try {
+//     const response = await instance.patch(`/topics`, {
+//       id,
+//       title,
+//       message,
+//       active,
+//     });
+//     return response;
+//   } catch (error) {
+//     throw new Error("Could not disable topic");
+//   }
+// }
 
 export async function deleteTopic(id?: number) {
   if (!id) return;

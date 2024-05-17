@@ -16,43 +16,45 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { createFormSchema } from "./schema";
-import { SendSection } from "../sections/types";
-import { createNewSection, getSections } from "@/app/actions/sections";
-import Sectioncontext from "@/app/store/sections-context";
+
+import { TopicsContext } from "@/app/store/topics-context";
 import useSWRMutation from "swr/mutation";
 import { toast } from "@/components/ui/use-toast";
+import { createNewTopic, getTopics } from "@/app/actions/topics";
+import { Topic } from "../Topic/types";
 
 function FormCreateTopic() {
-  const { setShowModal } = useContext(Sectioncontext);
-  const { trigger } = useSWRMutation("sections", getSections);
+  const { setShowModal, idSection, sections } = useContext(TopicsContext);
+  const { trigger } = useSWRMutation("topics", () => getTopics(idSection));
   const formSchema = z.object(createFormSchema);
+
+  const sectionSlug = sections.filter((section) => section.id === idSection);
 
   const createform = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
-      message: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const { title, message } = values;
-    if (!title || !message) return;
+    const { title } = values;
+    if (!title || !idSection || !sectionSlug.length) return;
 
-    const sendData: SendSection = {
+    const sendData: Topic = {
+      parentSectionId: idSection,
       title,
-      message,
+      parentSlug: sectionSlug[0].slug || "",
     };
 
-    const response = await createNewSection(sendData);
+    const response = await createNewTopic(sendData);
     await trigger();
     setShowModal(false);
     const respTitle =
       response?.status === 200
-        ? { title: "Seção criada com sucesso" }
-        : { title: "Ocorreu algum erro ao criar a seção" };
+        ? { title: "Tópico criada com sucesso" }
+        : { title: "Ocorreu algum erro ao criar o tópico" };
     toast(respTitle);
   }
   return (
@@ -63,40 +65,21 @@ function FormCreateTopic() {
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Título da seção</FormLabel>
+              <FormLabel>Nome do tópico</FormLabel>
               <FormControl>
-                <Input placeholder="Título" {...field} />
+                <Input placeholder="Tópico" {...field} />
               </FormControl>
-              <FormDescription>Escreva o título da seção.</FormDescription>
+              <FormDescription>Escreva o nome do tópico.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <FormField
-          control={createform.control}
-          name="message"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Descrição</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Descrição"
-                  className="resize-none"
-                  {...field}
-                />
-              </FormControl>
-              <FormDescription>
-                Escreva uma pequena descrição da seção.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <div className="flex justify-end align-middle gap-5">
           <Button
             variant="secondary"
             className="w-1/4"
+            type="button"
             onClick={() => setShowModal(false)}
           >
             cancelar

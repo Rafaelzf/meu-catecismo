@@ -9,39 +9,30 @@ import {
 } from "@/components/ui/dialog";
 
 import { TopicsContext } from "@/app/store/topics-context";
-import { FormCreate, FormEdit, FormDelete } from "..";
+import { FormCreateTopic, FormEdit, FormDeleteTopic } from "..";
 import { ActionsFormEnums } from "@/enums";
 function ModalTopic() {
-  const { showModal, setShowModal } = useContext(TopicsContext);
+  const { showModal, setShowModal, action } = useContext(TopicsContext);
   const closeModal = () => setShowModal(false);
 
   return (
     <Dialog open={showModal} onOpenChange={closeModal}>
       <DialogContent className="sm:max-w-[40%]">
         <DialogHeader>
-          TOPIC
           <DialogTitle className="text-orange-800">
-            {/* {infoSection.sectionType ===
-              ActionsFormEnums.Create && "Criar seção"}
-            {infoSection.sectionType === ActionsFormEnums.Edit &&
-              "Editar seção"} */}
+            {action === ActionsFormEnums.Create && "Criar tópico"}
+            {action === ActionsFormEnums.Edit && "Editar tópico"}
           </DialogTitle>
-          {/* {infoSection.sectionType === ActionsFormEnums.Edit && (
+          {action === ActionsFormEnums.Edit && (
             <DialogDescription>
-              Faça alterações em sua seção aqui. Clique em salvar ou cancelar
+              Faça alterações em sua tópico aqui. Clique em salvar ou cancelar
               quando terminar.
             </DialogDescription>
-          )} */}
+          )}
         </DialogHeader>
-        {/* {infoSection.sectionType === ActionsFormEnums.Create && (
-          <FormCreate />
-        )}
-        {infoSection.sectionType === ActionsFormEnums.Edit && (
-          <FormEdit />
-        )}
-        {infoSection.sectionType === ActionsFormEnums.Delete && (
-          <FormDelete />
-        )} */}
+        {action === ActionsFormEnums.Create && <FormCreateTopic />}
+        {action === ActionsFormEnums.Edit && <FormEdit />}
+        {action === ActionsFormEnums.Delete && <FormDeleteTopic />}
       </DialogContent>
     </Dialog>
   );

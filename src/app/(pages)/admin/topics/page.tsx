@@ -11,12 +11,7 @@ import { Bug } from "lucide-react";
 import useSWR from "swr";
 import { getTopics } from "@/app/actions/topics";
 import { TopicsListAdmin } from "@/components/molecules";
-import {
-  ButtonCreateTopic,
-  HeaderTopics,
-  BoxError,
-  Skeleton,
-} from "@/components/atoms";
+import { HeaderTopics, BoxError, Skeleton } from "@/components/atoms";
 import { useCallback, useContext, useEffect, useState } from "react";
 
 import TopicsContext from "@/app/store/topics-context";
@@ -27,7 +22,7 @@ const ModalTopic = dynamic(() => import("@/components/molecules/modal-topic"), {
 });
 
 export default function TopicsAdmin() {
-  const { setSections, idSection } = useContext(TopicsContext);
+  const { idSection } = useContext(TopicsContext);
 
   const { data, error, isValidating } = useSWR("topics", () =>
     getTopics(idSection)
@@ -40,17 +35,12 @@ export default function TopicsAdmin() {
     refetch();
   }, [idSection, refetch]);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   return (
     <>
       <ModalTopic />
       <Card>
-        <CardHeader className="flex flex-row justify-between content-center">
+        <CardHeader>
           <HeaderTopics />
-          <ButtonCreateTopic />
         </CardHeader>
 
         {isValidating && (

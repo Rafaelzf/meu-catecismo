@@ -40,7 +40,7 @@ export default function Combobox({ selects, handleOnChange }: ComboboxProps) {
     handleOnChange &&
       value.value &&
       handleOnChange(Number(value.value), value.label);
-  }, [value]);
+  }, [value, handleOnChange]);
 
   useEffect(() => {
     if (selects && selects.length && !value.value) {
@@ -49,7 +49,7 @@ export default function Combobox({ selects, handleOnChange }: ComboboxProps) {
         value: selects[0].value,
       });
     }
-  }, [selects]);
+  }, [selects, value.value]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
