@@ -1,16 +1,9 @@
 export const dynamic = "force-dynamic"; // defaults to auto
+import { Ask, QuestionsAsks } from "@/components/molecules/Topic/types";
 import { PrismaClient } from "@prisma/client";
 import { withAccelerate } from "@prisma/extension-accelerate";
 const prisma = new PrismaClient().$extends(withAccelerate());
-
-const corsSettings = {
-  status: 200,
-  headers: {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
-    "Access-Control-Allow-Headers": "Content-Type, Authorization",
-  },
-};
+import { corsSettings } from "../constants";
 
 export async function GET(req: Request) {
   if (req.method !== "GET") {
@@ -44,6 +37,7 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
+    console.log(body);
 
     const resultCreate = await prisma.sections.update({
       where: {
@@ -67,6 +61,41 @@ export async function POST(req: Request) {
     return Response.json({
       error:
         "Houve algum erro ao realizar a operação de CREATE do tópico junto ao prisma.",
+    });
+  }
+}
+
+export async function PATCH(req: Request) {
+  if (req.method !== "PATCH") {
+    return new Response("Method not allowed", { status: 405 });
+  }
+  try {
+    const body = await req.json();
+
+    const user = await prisma.topic.update({
+      where: { id: body.id },
+      data: {
+        title: body.title,
+        active: body.active,
+        questionsAsks: {
+          create: body.questionsAsks.map((item: QuestionsAsks) => ({
+            question: item.question,
+            asks: {
+              create: item.asks.map((ask: Ask) => ({
+                ask: ask.ask,
+              })),
+            },
+          })),
+        },
+      },
+    });
+
+    return Response.json(user, corsSettings);
+  } catch (error) {
+    console.error("erro", error);
+    return Response.json({
+      error:
+        "Houve algum erro ao realizar a operação de PATCH junto ao prisma.",
     });
   }
 }

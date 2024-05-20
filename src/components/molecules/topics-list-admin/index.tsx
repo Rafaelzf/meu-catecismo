@@ -13,9 +13,12 @@ import { TopicActionsButtons, EmptyBox } from "@/components/atoms";
 import { Topic } from "../Topic/types";
 import { convertDate } from "@/lib/utils";
 
-import { PropsDataTopics } from "./types";
+import { useContext } from "react";
+import TopicsContext from "@/app/store/topics-context";
 
-export function TopicsListAdmin({ topics }: PropsDataTopics) {
+export function TopicsListAdmin() {
+  const { topics } = useContext(TopicsContext);
+
   return (
     <>
       {topics.length === 0 && <EmptyBox>****</EmptyBox>}

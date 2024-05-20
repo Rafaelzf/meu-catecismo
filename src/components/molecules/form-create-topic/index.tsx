@@ -40,6 +40,7 @@ function FormCreateTopic() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const { title } = values;
+
     if (!title || !idSection || !sectionSlug.length) return;
 
     const sendData: Topic = {

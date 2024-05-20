@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 
 import { TopicsContext } from "@/app/store/topics-context";
-import { FormCreateTopic, FormEdit, FormDeleteTopic } from "..";
+import { FormCreateTopic, FormEditTopic, FormDeleteTopic } from "..";
 import { ActionsFormEnums } from "@/enums";
 function ModalTopic() {
   const { showModal, setShowModal, action } = useContext(TopicsContext);
@@ -17,7 +17,7 @@ function ModalTopic() {
 
   return (
     <Dialog open={showModal} onOpenChange={closeModal}>
-      <DialogContent className="sm:max-w-[40%]">
+      <DialogContent className="sm:max-w-[50%]">
         <DialogHeader>
           <DialogTitle className="text-orange-800">
             {action === ActionsFormEnums.Create && "Criar tópico"}
@@ -31,7 +31,7 @@ function ModalTopic() {
           )}
         </DialogHeader>
         {action === ActionsFormEnums.Create && <FormCreateTopic />}
-        {action === ActionsFormEnums.Edit && <FormEdit />}
+        {action === ActionsFormEnums.Edit && <FormEditTopic />}
         {action === ActionsFormEnums.Delete && <FormDeleteTopic />}
       </DialogContent>
     </Dialog>

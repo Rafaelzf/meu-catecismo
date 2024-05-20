@@ -3,8 +3,11 @@ import { createContext, useState } from "react";
 import { TopicsTypes, TopicscontextProviderProps } from "./types";
 import { InfoSectionType } from "../sections-context/types";
 import { ActionsFormEnums } from "@/enums";
+import { Topic } from "@/components/molecules/Topic/types";
 
 export const TopicsContext = createContext<TopicsTypes>({
+  topics: [],
+  setTopics: () => {},
   showModal: false,
   setShowModal: () => {},
   idSection: undefined,
@@ -20,6 +23,7 @@ export const TopicsContext = createContext<TopicsTypes>({
 export function TopicsContextProvider({
   children,
 }: TopicscontextProviderProps) {
+  const [topics, setTopics] = useState<Topic[]>([]);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [infoSection, setInfoSection] = useState<InfoSectionType[]>([]);
   const [idSection, setIdSection] = useState<number>(12);
@@ -39,6 +43,8 @@ export function TopicsContextProvider({
         setAction,
         idTopic,
         setIdTopic,
+        topics,
+        setTopics,
       }}
     >
       {children}

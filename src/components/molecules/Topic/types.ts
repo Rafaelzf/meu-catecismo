@@ -4,7 +4,7 @@ export type Topic = {
   title: string;
   parentSectionId: number;
   image?: null;
-  content?: QuestionsAsks[];
+  questionsAsks?: QuestionsAsks[];
   active?: boolean;
   createDate?: string;
   updateDate?: string;
@@ -13,7 +13,7 @@ export type Topic = {
 export type QuestionsAsks = {
   id?: number;
   question: string;
-  ask: Ask[];
+  asks: Ask[];
   topicId: number;
   createDate?: string;
   updateDate?: string;
@@ -22,6 +22,7 @@ export type QuestionsAsks = {
 export type Ask = {
   id?: number;
   ask: string;
+  questionId?: number;
   createDate?: string;
   updateDate?: string;
 };

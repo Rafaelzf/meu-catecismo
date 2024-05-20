@@ -25,11 +25,11 @@ model Topic {
   id              Int             @id @default(autoincrement())
   parentSlug      String
   title           String          @unique
-  section         Sections?       @relation(fields: [parentSectionId], references: [id])
+  section         Sections?       @relation(fields: [parentSectionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   parentSectionId Int?
   image           Bytes?
   active          Boolean         @default(true)
-  content         QuestionsAsks[]
+  questionsAsks   QuestionsAsks[]
   createDate      DateTime        @default(now())
   updateDate      DateTime        @updatedAt
 }
@@ -37,29 +37,18 @@ model Topic {
 model QuestionsAsks {
   id         Int      @id @default(autoincrement())
   question   String   @unique
-  ask        Json[]
-  topic      Topic?   @relation(fields: [topicId], references: [id])
+  asks       Ask[]
+  topic      Topic?   @relation(fields: [topicId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   topicId    Int?
   createDate DateTime @default(now())
   updateDate DateTime @updatedAt
 }
 
-// model ContentTopics {  
-//   id            Int      @id @default(autoincrement())
-//   title         String   @unique
-//   page          String   @unique
-//   topic         Topics   @relation(fields: [parentTopicId], references: [id])
-//   parentTopicId Int
-//   image         Bytes?
-//   active        Boolean  @default(true)
-//   createDate    DateTime @default(now())
-//   updateDate    DateTime @updatedAt
-// }
-
-// model PageParticularTopic {
-//   id         Int      @id @default(autoincrement())
-//   page       String   @unique
-//   content    Json[]
-//   createDate DateTime @default(now())
-//   updateDate DateTime @updatedAt
-// }
+model Ask {
+  id            Int            @id @default(autoincrement())
+  ask           String         @unique
+  QuestionsAsks QuestionsAsks? @relation(fields: [questionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  questionId    Int?
+  createDate    DateTime       @default(now())
+  updateDate    DateTime       @updatedAt
+}

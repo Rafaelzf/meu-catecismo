@@ -22,10 +22,12 @@ const ModalTopic = dynamic(() => import("@/components/molecules/modal-topic"), {
 });
 
 export default function TopicsAdmin() {
-  const { idSection } = useContext(TopicsContext);
+  const { idSection, setTopics } = useContext(TopicsContext);
 
-  const { data, error, isValidating } = useSWR("topics", () =>
-    getTopics(idSection)
+  const { data, error, isValidating } = useSWR(
+    "topics",
+    () => getTopics(idSection),
+    { revalidateOnFocus: false }
   );
 
   const { trigger } = useSWRMutation("topics", () => getTopics(idSection));
@@ -34,6 +36,10 @@ export default function TopicsAdmin() {
   useEffect(() => {
     refetch();
   }, [idSection, refetch]);
+
+  useEffect(() => {
+    !error && !isValidating && data && data.length && setTopics(data);
+  }, [data, error, isValidating, setTopics]);
 
   return (
     <>
@@ -58,7 +64,7 @@ export default function TopicsAdmin() {
         {!isValidating && !error && data && (
           <>
             <CardContent>
-              <TopicsListAdmin topics={data} />
+              <TopicsListAdmin />
             </CardContent>
             <CardFooter className="text-xs text-muted-foreground">
               Showing <strong>1-10</strong> of <strong>32</strong> products

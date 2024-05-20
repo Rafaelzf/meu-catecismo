@@ -2,15 +2,8 @@ export const dynamic = "force-dynamic"; // defaults to auto
 import { PrismaClient } from "@prisma/client";
 import { withAccelerate } from "@prisma/extension-accelerate";
 const prisma = new PrismaClient().$extends(withAccelerate());
+import { corsSettings } from "../constants";
 
-const corsSettings = {
-  status: 200,
-  headers: {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
-    "Access-Control-Allow-Headers": "Content-Type, Authorization",
-  },
-};
 export async function GET() {
   try {
     const allSections = await prisma.sections.findMany();

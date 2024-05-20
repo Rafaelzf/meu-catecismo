@@ -7,13 +7,17 @@ import {
   Skeleton,
 } from "@/components/atoms";
 import { getSections } from "@/app/actions/sections";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import TopicsContext from "@/app/store/topics-context";
 import useSWR from "swr";
 import { Bug } from "lucide-react";
 export default function HeaderTopics() {
   const { setIdSection, idSection, setSections } = useContext(TopicsContext);
-  const { data, error, isValidating } = useSWR("sections", () => getSections());
+  const { data, error, isValidating } = useSWR(
+    "sections",
+    () => getSections(),
+    { revalidateOnFocus: false }
+  );
 
   const sectionName =
     data && data.find((section: { id: number }) => section.id === idSection);
@@ -27,7 +31,11 @@ export default function HeaderTopics() {
       };
     });
 
-  data && setSections(data);
+  useEffect(() => {
+    if (data) {
+      setSections(data);
+    }
+  }, [data, setSections]);
 
   async function handleOnChange(id: number) {
     if (!id) return;
