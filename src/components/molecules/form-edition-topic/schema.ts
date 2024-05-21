@@ -11,16 +11,18 @@ export const editFormSchema = z.object({
       message: "O título deve conter no máximo 20 caracteres.",
     }),
 
-  questionsAsks: z.array(
-    z.object({
-      question: z.string(),
-      asks: z.array(
-        z.object({
-          ask: z.string(),
-        })
-      ),
-      topicId: z.number(),
-    })
-  ),
+  // questionsAsks: z.array(
+  //   z.object({
+  //     id: z.number().optional(),
+  //     question: z.string(),
+  //     asks: z.array(
+  //       z.object({
+  //         id: z.number().optional(),
+  //         ask: z.string(),
+  //       })
+  //     ),
+  //     topicId: z.number(),
+  //   })
+  // ),
   active: z.boolean(),
 });

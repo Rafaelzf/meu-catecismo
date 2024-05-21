@@ -17,7 +17,7 @@ function ModalTopic() {
 
   return (
     <Dialog open={showModal} onOpenChange={closeModal}>
-      <DialogContent className="sm:max-w-[50%]">
+      <DialogContent className="sm:max-w-[30%]">
         <DialogHeader>
           <DialogTitle className="text-orange-800">
             {action === ActionsFormEnums.Create && "Criar tópico"}

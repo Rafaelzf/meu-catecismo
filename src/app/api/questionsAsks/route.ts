@@ -21,6 +21,9 @@ export async function GET(req: Request) {
     } else {
       allQuestions = await prisma.questionsAsks.findMany({
         where: { topicId: Number(id) },
+        include: {
+          asks: true,
+        },
       });
     }
 

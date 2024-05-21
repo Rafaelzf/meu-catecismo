@@ -72,25 +72,17 @@ export async function PATCH(req: Request) {
   try {
     const body = await req.json();
 
-    const user = await prisma.topic.update({
+    console.log(body.title);
+
+    const updatedTopic = await prisma.topic.update({
       where: { id: body.id },
       data: {
         title: body.title,
         active: body.active,
-        questionsAsks: {
-          create: body.questionsAsks.map((item: QuestionsAsks) => ({
-            question: item.question,
-            asks: {
-              create: item.asks.map((ask: Ask) => ({
-                ask: ask.ask,
-              })),
-            },
-          })),
-        },
       },
     });
 
-    return Response.json(user, corsSettings);
+    return Response.json(updatedTopic, corsSettings);
   } catch (error) {
     console.error("erro", error);
     return Response.json({

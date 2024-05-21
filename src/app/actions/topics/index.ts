@@ -38,14 +38,14 @@ export async function createNewTopic(params: Topic) {
 }
 
 export async function editTopic(sendData: Topic) {
-  const { id, title, active, questionsAsks } = sendData;
+  const { id, title, active } = sendData;
   if (!id || active === null || active === undefined || !title) return;
+
   try {
     const response = await instance.patch(`/topics`, {
       id,
       title,
       active,
-      questionsAsks,
     });
     return response;
   } catch (error) {
