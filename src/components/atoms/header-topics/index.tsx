@@ -1,5 +1,5 @@
 "use client";
-import { CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { CardTitle, CardDescription } from "@/components/ui/card";
 import {
   BoxError,
   ButtonCreateTopic,

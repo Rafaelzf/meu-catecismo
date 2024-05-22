@@ -193,7 +193,7 @@ function FormEditTopic() {
         />
         <div className="flex justify-end items-center align-middle">
           <Link
-            href={`/admin/topics/${currentTopic?.id}`}
+            href={`/admin/topics/${currentTopic?.id}/${currentTopic?.title}`}
             className=" p-3 rounded-lg border-0 text-emerald-500 hover:text-emerald-500 
             flex justify-end items-center align-middle gap-3 hover:bg-emerald-50"
           >

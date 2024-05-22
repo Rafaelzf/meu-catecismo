@@ -37,7 +37,6 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    console.log(body);
 
     const resultCreate = await prisma.sections.update({
       where: {
@@ -71,9 +70,6 @@ export async function PATCH(req: Request) {
   }
   try {
     const body = await req.json();
-
-    console.log(body.title);
-
     const updatedTopic = await prisma.topic.update({
       where: { id: body.id },
       data: {
