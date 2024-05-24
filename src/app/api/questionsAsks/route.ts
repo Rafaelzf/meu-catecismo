@@ -1,5 +1,5 @@
 export const dynamic = "force-dynamic"; // defaults to auto
-import { Ask, QuestionsAsks } from "@/components/molecules/Topic/types";
+import { Ask } from "@/components/molecules/Topic/types";
 import { PrismaClient } from "@prisma/client";
 import { withAccelerate } from "@prisma/extension-accelerate";
 const prisma = new PrismaClient().$extends(withAccelerate());
@@ -40,7 +40,6 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-
     const resultCreate = await prisma.questionsAsks.create({
       data: {
         topicId: body.topicId,

@@ -11,16 +11,17 @@ export async function GET(req: Request) {
   }
 
   const { searchParams } = new URL(req.url);
-  const id = searchParams.get("id");
+  const parentSectionId = searchParams.get("parentSectionId");
+  const topicId = searchParams.get("topicId");
 
   try {
     let allTopics;
 
-    if (id === null || id === undefined) {
+    if (parentSectionId === null || parentSectionId === undefined) {
       allTopics = await prisma.topic.findMany();
     } else {
       allTopics = await prisma.topic.findMany({
-        where: { parentSectionId: Number(id) },
+        where: { parentSectionId: Number(parentSectionId) },
       });
     }
 

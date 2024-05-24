@@ -86,6 +86,12 @@ export default function QuestionsAsks({ params }: QuestionsAsksProps) {
           </BoxError>
         )}
 
+        {data && data.length === 0 && (
+          <CardContent className="flex justify-center items-center">
+            <p>O tópico não posssui conteúdo cadastrado.</p>
+          </CardContent>
+        )}
+
         {data && data.length > 0 && !isValidating && !error && (
           <CardContent>
             {data.map((item: QuestionsAsksType) => (

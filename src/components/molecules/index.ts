@@ -11,7 +11,6 @@ import FormDeleteTopic from "./form-delete-topic";
 import FormEditTopic from "./form-edition-topic";
 import ModalQuestions from "./modal-questions";
 
-import FormEditQuestions from "./form-edition-questions";
 import FormDeleteQuestions from "./form-delete-questions";
 import FormCreateQuestions from "./form-create-questions/page";
 
@@ -29,6 +28,5 @@ export {
   FormCreateTopic,
   FormEditTopic,
   FormCreateQuestions,
-  FormEditQuestions,
   FormDeleteQuestions,
 };

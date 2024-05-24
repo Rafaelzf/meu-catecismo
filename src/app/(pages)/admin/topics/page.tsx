@@ -12,7 +12,7 @@ import useSWR from "swr";
 import { getTopics } from "@/app/actions/topics";
 import { TopicsListAdmin } from "@/components/molecules";
 import { HeaderTopics, BoxError, Skeleton } from "@/components/atoms";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect } from "react";
 
 import TopicsContext from "@/app/store/topics-context";
 import useSWRMutation from "swr/mutation";
