@@ -41,8 +41,6 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    console.log(body);
-
     const resultCreate = await prisma.questionsAsks.create({
       data: {
         topicId: body.topicId,
@@ -66,13 +64,53 @@ export async function POST(req: Request) {
   }
 }
 
+export async function PATCH(req: Request) {
+  if (req.method !== "PATCH") {
+    return new Response("Method not allowed", { status: 405 });
+  }
+  try {
+    const body = await req.json();
+
+    const upsertedAsks = await Promise.all(
+      body.asks.map(async (ask: Ask) => {
+        const upsertResult = await prisma.ask.upsert({
+          where: { id: ask.id || -1 },
+          create: {
+            ask: ask.ask,
+            questionId: body.questionId,
+          },
+          update: {
+            ask: ask.ask,
+          },
+        });
+        return upsertResult;
+      })
+    );
+
+    const updatedQuestion = await prisma.questionsAsks.update({
+      where: { id: body.questionId },
+      data: {
+        question: body.question,
+      },
+    });
+
+    return Response.json(updatedQuestion, corsSettings);
+  } catch (error) {
+    console.error("erro", error);
+    return Response.json({
+      error:
+        "Houve algum erro ao realizar a operação de PATCH junto ao prisma.",
+    });
+  }
+}
+
 export async function DELETE(req: Request) {
   if (req.method !== "DELETE") {
     return new Response("Method not allowed", { status: 405 });
   }
   try {
     const body = await req.json();
-
+    console.log("Deleting", body);
     const user = await prisma.questionsAsks.delete({
       where: { id: body.id },
     });

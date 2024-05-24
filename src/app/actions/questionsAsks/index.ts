@@ -1,3 +1,4 @@
+import { QuestionsAsks } from "@/components/molecules/Topic/types";
 import axios from "axios";
 
 export const instance = axios.create({
@@ -20,7 +21,46 @@ export async function questionAsks(topicId?: number) {
   }
 }
 
+export async function createNewQuestionsAsks(params: QuestionsAsks) {
+  if (!params) return;
+
+  try {
+    const response = await instance.post(`/questionsAsks`, {
+      topicId: params.topicId,
+      question: params.question,
+      asks: params.asks,
+    });
+
+    return Response.json(response);
+  } catch (error) {
+    console.error(error);
+    throw new Error("Could not create new questionsAsks");
+  }
+}
+
+export async function editQuestionsAsks(
+  params: QuestionsAsks,
+  questionId?: number
+) {
+  if (!params) return;
+
+  try {
+    const response = await instance.patch(`/questionsAsks`, {
+      questionId: questionId,
+      topicId: params.topicId,
+      question: params.question,
+      asks: params.asks,
+    });
+
+    return Response.json(response);
+  } catch (error) {
+    console.error(error);
+    throw new Error("Could not create new questionsAsks");
+  }
+}
+
 export async function deleteQuestionsAsks(id?: number) {
+  console.log(id);
   if (!id) return;
   try {
     const response = await instance.delete(`/questionsAsks`, {

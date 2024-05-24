@@ -1,3 +1,4 @@
+"use client";
 import { createContext, useState } from "react";
 import {
   PropsSectionTypes,
@@ -27,7 +28,7 @@ export function SectioncontextProvider({
   const [infoSection, setInfoSection] = useState<InfoSectionType>({
     id: undefined,
     sectionType: undefined,
-    title: undefined,       
+    title: undefined,
     slug: undefined,
     message: undefined,
     image: undefined,
