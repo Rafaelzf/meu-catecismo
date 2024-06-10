@@ -13,6 +13,7 @@ import ModalQuestions from "./modal-questions";
 
 import FormDeleteQuestions from "./form-delete-questions";
 import FormCreateQuestions from "./form-create-questions/page";
+import PaginationComponent from "./pagination";
 
 export {
   PageSections,
@@ -29,4 +30,5 @@ export {
   FormEditTopic,
   FormCreateQuestions,
   FormDeleteQuestions,
+  PaginationComponent,
 };

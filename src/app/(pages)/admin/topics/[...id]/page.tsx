@@ -10,35 +10,44 @@ import {
 import { Bug } from "lucide-react";
 import useSWR from "swr";
 import { getTopics } from "@/app/actions/topics";
-import { TopicsListAdmin } from "@/components/molecules";
+import { PaginationComponent, TopicsListAdmin } from "@/components/molecules";
 import { HeaderTopics, BoxError, Skeleton } from "@/components/atoms";
 import { useCallback, useContext, useEffect } from "react";
 
 import TopicsContext from "@/app/store/topics-context";
 import useSWRMutation from "swr/mutation";
+import { TopicProps } from "@/app/(pages)/topic/[...id]/types";
+import AdminContext from "@/app/store/admin-context";
 
 const ModalTopic = dynamic(() => import("@/components/molecules/modal-topic"), {
   ssr: false,
 });
 
-export default function TopicsAdmin() {
-  const { idSection, setTopics } = useContext(TopicsContext);
+export default function TopicsAdmin({ params }: TopicProps) {
+  const { setTopics, idSection } = useContext(TopicsContext);
+  const { pagination } = useContext(AdminContext);
 
   const { data, error, isValidating } = useSWR(
     "topics",
-    () => getTopics(idSection),
+    () => getTopics(idSection, pagination.skip),
     { revalidateOnFocus: false }
   );
 
-  const { trigger } = useSWRMutation("topics", () => getTopics(idSection));
+  const { trigger } = useSWRMutation("topics", () =>
+    getTopics(idSection, pagination.skip)
+  );
   const refetch = useCallback(async () => await trigger(), [trigger]);
 
   useEffect(() => {
+    if (!idSection && !pagination) return;
+    console.log(pagination);
     refetch();
-  }, [idSection, refetch]);
+  }, [idSection, pagination, refetch]);
 
   useEffect(() => {
-    !error && !isValidating && data && data.length && setTopics(data);
+    if (!error && !isValidating && data && data.topics) {
+      setTopics(data.topics);
+    }
   }, [data, error, isValidating, setTopics]);
 
   return (
@@ -46,7 +55,7 @@ export default function TopicsAdmin() {
       <ModalTopic />
       <Card>
         <CardHeader>
-          <HeaderTopics />
+          <HeaderTopics idSection={params.id[0] as number} />
         </CardHeader>
 
         {isValidating && (
@@ -67,7 +76,9 @@ export default function TopicsAdmin() {
               <TopicsListAdmin />
             </CardContent>
             <CardFooter className="text-xs text-muted-foreground">
-              Showing <strong>1-10</strong> of <strong>32</strong> products
+              <div className="flex flex-row justify-between content-center  w-full h-full">
+                <PaginationComponent {...data.metadatas} />
+              </div>
             </CardFooter>
           </>
         )}

@@ -26,7 +26,7 @@ export function TopicsContextProvider({
   const [topics, setTopics] = useState<Topic[]>([]);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [infoSection, setInfoSection] = useState<InfoSectionType[]>([]);
-  const [idSection, setIdSection] = useState<number>(12);
+  const [idSection, setIdSection] = useState<number | undefined>();
   const [idTopic, setIdTopic] = useState<number | undefined>();
   const [action, setAction] = useState<ActionsFormEnums>();
 

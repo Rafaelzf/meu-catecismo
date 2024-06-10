@@ -1,7 +1,7 @@
 "use client";
 
 import useSWR from "swr";
-import { QuestionsAsksProps } from "./types";
+import { QuestionsAsksProps } from "../../types";
 import { questionAsks } from "@/app/actions/questionsAsks";
 import { BoxError, Skeleton } from "@/components/atoms";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -27,27 +27,27 @@ export default function QuestionsAsks({ params }: QuestionsAsksProps) {
     { revalidateOnFocus: false }
   );
 
-  const dafaultActions = (action: ActionsFormEnums) => {
+  const defaultActions = (action: ActionsFormEnums) => {
     setShowModal(true);
     setAction(action);
   };
 
   const createnNewQuestion = () => {
-    dafaultActions(ActionsFormEnums.Create);
+    defaultActions(ActionsFormEnums.Create);
     setIdTopic(params.slug[0] as number);
   };
 
   const deleteQuestion = (id: number | undefined) => {
     if (!id) return;
     const question = data.filter((item: QuestionsAsksType) => item.id === id);
-    dafaultActions(ActionsFormEnums.Delete);
+    defaultActions(ActionsFormEnums.Delete);
     setQuestion(question[0]);
   };
 
   const editQuestion = (id: number | undefined) => {
     if (!id) return;
     const question = data.filter((item: QuestionsAsksType) => item.id === id);
-    dafaultActions(ActionsFormEnums.Edit);
+    defaultActions(ActionsFormEnums.Edit);
     setQuestion(question[0]);
   };
 

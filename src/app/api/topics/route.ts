@@ -1,31 +1,57 @@
 export const dynamic = "force-dynamic"; // defaults to auto
-import { Ask, QuestionsAsks } from "@/components/molecules/Topic/types";
+
 import { PrismaClient } from "@prisma/client";
 import { withAccelerate } from "@prisma/extension-accelerate";
 const prisma = new PrismaClient().$extends(withAccelerate());
 import { corsSettings } from "../constants";
+import { revalidatePath } from "next/cache";
 
 export async function GET(req: Request) {
   if (req.method !== "GET") {
     return new Response("Method not allowed", { status: 405 });
   }
-
   const { searchParams } = new URL(req.url);
+
   const parentSectionId = searchParams.get("parentSectionId");
-  const topicId = searchParams.get("topicId");
+  const take = Number(searchParams.get("take")) || 4;
+  const skip = Number(searchParams.get("skip")) || 0;
 
   try {
     let allTopics;
 
     if (parentSectionId === null || parentSectionId === undefined) {
-      allTopics = await prisma.topic.findMany();
+      allTopics = await prisma.topic.findMany({
+        skip,
+        take,
+        orderBy: {
+          updateDate: "desc",
+        },
+      });
     } else {
       allTopics = await prisma.topic.findMany({
+        skip,
+        take,
         where: { parentSectionId: Number(parentSectionId) },
+        orderBy: {
+          updateDate: "desc",
+        },
       });
     }
 
-    return Response.json(allTopics, corsSettings);
+    const total = await prisma.topic.count();
+
+    const returnData = {
+      topics: allTopics,
+      metadatas: {
+        hasNextPage: skip + take < total,
+        hasPrevPage: skip > 0,
+        totalPages: Math.ceil(total / take),
+        currentPage: Math.ceil(skip / take) + 1,
+        skip,
+        take,
+      },
+    };
+    return Response.json(returnData, corsSettings);
   } catch (error) {
     console.error(error);
     return Response.json({

@@ -1,6 +1,6 @@
 "use client";
 import { MoreHorizontal, Bug, TriangleAlert } from "lucide-react";
-
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
@@ -16,9 +16,16 @@ import { convertDate } from "@/lib/utils";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { useRouter } from "next/navigation";
+
 export function SectionsListAdmin() {
   const { data: sections, error, isLoading } = useSWR("sections", getSections);
   const { trigger } = useSWRMutation("sections", getSections);
+  const router = useRouter();
+
+  const goTopic = (sectionId: number) => {
+    router.push(`/admin/topics/${sectionId}`);
+  };
 
   if (error)
     return (
@@ -41,18 +48,19 @@ export function SectionsListAdmin() {
     return (
       <>
         <main className={`border border-primary rounded-md`}>
-          <header className="grid grid-cols-5 gap-4 place-items-center text-center py-4 text-sm text-zinc-500 dark:text-zinc-400 ">
+          <header className="grid grid-cols-6 gap-4 place-items-center text-center py-4 text-sm text-zinc-500 dark:text-zinc-400 ">
             <div>Nome</div>
             <div>Status</div>
             <div>Data de criação</div>
             <div>última atualização</div>
             <div>Ação</div>
+            <div>Tópicos</div>
           </header>
           <main className="text-sm text-orange-800">
             {sections.map((section: Section) => (
               <div
                 key={section.id}
-                className="grid grid-cols-5 gap-4 place-items-center text-center py-2 border-t-[1px] border-primary"
+                className="grid grid-cols-6 gap-4 place-items-center text-center py-2 border-t-[1px] border-primary"
               >
                 <div className="font-semibold">{section.title}</div>
                 <div>
@@ -74,6 +82,14 @@ export function SectionsListAdmin() {
                     </DropdownMenuTrigger>
                     <ActionsButtons {...section} trigger={trigger} />
                   </DropdownMenu>
+                </div>
+                <div>
+                  <Button
+                    className="p-3 rounded-lg bg-orange-500 text-white hover:bg-orange-700"
+                    onClick={() => goTopic(section.id)}
+                  >
+                    Ver tópicos
+                  </Button>
                 </div>
               </div>
             ))}

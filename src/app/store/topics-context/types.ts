@@ -11,7 +11,7 @@ export type TopicsTypes = {
   idTopic?: number;
   setIdTopic: Dispatch<SetStateAction<number | undefined>>;
   idSection?: number;
-  setIdSection: Dispatch<SetStateAction<number>>;
+  setIdSection: Dispatch<SetStateAction<number | undefined>>;
   sections: InfoSectionType[];
   setSections: Dispatch<SetStateAction<InfoSectionType[]>>;
   action?: ActionsFormEnums;

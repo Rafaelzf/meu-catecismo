@@ -5,11 +5,16 @@ export const instance = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}`,
 });
 
-export async function getTopics(parentSectionId?: number, topicId?: number) {
+export async function getTopics(
+  parentSectionId?: number,
+  skip?: number,
+  take?: number
+) {
   try {
     const response = await instance.get("/topics", {
-      params: { parentSectionId, topicId },
+      params: { parentSectionId, skip, take },
     });
+
     return response.data;
   } catch (error: any) {
     console.error(error);

@@ -7,20 +7,31 @@ import {
   Skeleton,
 } from "@/components/atoms";
 import { getSections } from "@/app/actions/sections";
-import { useContext, useEffect } from "react";
+import { useCallback, useContext, useEffect } from "react";
 import TopicsContext from "@/app/store/topics-context";
 import useSWR from "swr";
 import { Bug } from "lucide-react";
-export default function HeaderTopics() {
-  const { setIdSection, idSection, setSections } = useContext(TopicsContext);
+import { Options } from "@/app/(pages)/admin/topics/types";
+
+export default function HeaderTopics({ idSection }: { idSection: number }) {
+  const { setIdSection, setSections } = useContext(TopicsContext);
   const { data, error, isValidating } = useSWR(
     "sections",
     () => getSections(),
     { revalidateOnFocus: false }
   );
 
+  const sortByIdFirst = (items: Options[], id: number) => {
+    return items.sort((a, b) => {
+      if (Number(a.value) === Number(id)) return -1;
+      if (Number(b.value) === Number(id)) return 1;
+      return 0;
+    });
+  };
+
   const sectionName =
-    data && data.find((section: { id: number }) => section.id === idSection);
+    data &&
+    data.find((section: { id: number }) => section.id === Number(idSection));
 
   const convertData =
     data &&
@@ -30,6 +41,9 @@ export default function HeaderTopics() {
         label: section?.title || "",
       };
     });
+
+  const convertDataFirst =
+    convertData && sortByIdFirst(convertData, Number(idSection));
 
   useEffect(() => {
     if (data) {
@@ -62,7 +76,10 @@ export default function HeaderTopics() {
           </div>
           <CardDescription>
             Escolha a secao:{" "}
-            <Combobox selects={convertData} handleOnChange={handleOnChange} />
+            <Combobox
+              selects={convertDataFirst}
+              handleOnChange={handleOnChange}
+            />
           </CardDescription>
         </>
       )}

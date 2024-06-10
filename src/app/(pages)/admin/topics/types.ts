@@ -5,3 +5,12 @@ export type QuestionsAsksProps = {
 export type QuestionsAsksSlug = {
   slug: unknown[];
 };
+
+export type TopicParam = {
+  id: unknown[];
+};
+
+export type Options = {
+  value: string;
+  label: string;
+};
