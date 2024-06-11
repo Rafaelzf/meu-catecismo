@@ -21,7 +21,7 @@ import {
 
 export interface ComboboxProps {
   selects: IItens[];
-  handleOnChange?: (id: number, section: string) => void;
+  handleOnChange: (id: number) => void;
 }
 
 export interface IItens {
@@ -36,11 +36,9 @@ export default function Combobox({ selects, handleOnChange }: ComboboxProps) {
     value: "",
   });
 
-  useEffect(() => {
-    handleOnChange &&
-      value.value &&
-      handleOnChange(Number(value.value), value.label);
-  }, [value, handleOnChange]);
+  const teste = () => {
+    console.log("teste");
+  };
 
   useEffect(() => {
     if (selects && selects.length && !value.value) {
@@ -84,6 +82,7 @@ export default function Combobox({ selects, handleOnChange }: ComboboxProps) {
                         value: currentValue === value.value ? "" : currentValue,
                       });
                       setOpen(false);
+                      handleOnChange(Number(select.value));
                     }}
                   >
                     {select.label}

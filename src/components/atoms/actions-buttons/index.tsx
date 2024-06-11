@@ -14,10 +14,9 @@ interface Props {
   title: string;
   message: string;
   active: boolean;
-  trigger: () => Promise<void>;
 }
 
-export function ActionsButtons({ id, title, message, active, trigger }: Props) {
+export function ActionsButtons({ id, title, message, active }: Props) {
   const { setShowModal, setInfoSection } = useContext(Sectioncontext);
 
   async function handleDeleteClick() {

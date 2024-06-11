@@ -7,14 +7,14 @@ import {
   Skeleton,
 } from "@/components/atoms";
 import { getSections } from "@/app/actions/sections";
-import { useCallback, useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import TopicsContext from "@/app/store/topics-context";
 import useSWR from "swr";
 import { Bug } from "lucide-react";
 import { Options } from "@/app/(pages)/admin/topics/types";
 
 export default function HeaderTopics({ idSection }: { idSection: number }) {
-  const { setIdSection, setSections } = useContext(TopicsContext);
+  const { setSections } = useContext(TopicsContext);
   const { data, error, isValidating } = useSWR(
     "sections",
     () => getSections(),
@@ -31,11 +31,13 @@ export default function HeaderTopics({ idSection }: { idSection: number }) {
 
   const sectionName =
     data &&
-    data.find((section: { id: number }) => section.id === Number(idSection));
+    data.sections.find(
+      (section: { id: number }) => section.id === Number(idSection)
+    );
 
   const convertData =
     data &&
-    data.map((section: { id: number; title: string }) => {
+    data.sections.map((section: { id: number; title: string }) => {
       return {
         value: section.id?.toString() || "",
         label: section?.title || "",
@@ -47,13 +49,13 @@ export default function HeaderTopics({ idSection }: { idSection: number }) {
 
   useEffect(() => {
     if (data) {
-      setSections(data);
+      setSections(data.sections);
     }
   }, [data, setSections]);
 
   async function handleOnChange(id: number) {
     if (!id) return;
-    setIdSection(id);
+    window.location.href = `/admin/topics/${id}`;
   }
 
   return (

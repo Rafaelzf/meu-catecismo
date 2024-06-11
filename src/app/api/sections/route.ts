@@ -4,11 +4,41 @@ import { withAccelerate } from "@prisma/extension-accelerate";
 const prisma = new PrismaClient().$extends(withAccelerate());
 import { corsSettings } from "../constants";
 
-export async function GET() {
+export async function GET(req: Request) {
+  if (req.method !== "GET") {
+    return new Response("Method not allowed", { status: 405 });
+  }
+
+  const { searchParams } = new URL(req.url);
+
+  const take = Number(searchParams.get("take")) || 4;
+  const skip = Number(searchParams.get("skip")) || 0;
+
   try {
-    const allSections = await prisma.sections.findMany();
+    const allSections = await prisma.sections.findMany({
+      skip,
+      take,
+      orderBy: {
+        updateDate: "desc",
+      },
+    });
     allSections.length === 0 && (await init());
-    return Response.json(allSections, corsSettings);
+
+    const total = await prisma.sections.count();
+
+    const returnData = {
+      sections: allSections,
+      metadatas: {
+        hasNextPage: skip + take < total,
+        hasPrevPage: skip > 0,
+        totalPages: Math.ceil(total / take),
+        currentPage: Math.ceil(skip / take) + 1,
+        skip,
+        take,
+      },
+    };
+
+    return Response.json(returnData, corsSettings);
   } catch (error) {
     console.error(error);
     return Response.json({
@@ -104,13 +134,3 @@ async function init() {
   });
   return resultCreate;
 }
-
-GET()
-  .then(async () => {
-    await prisma.$disconnect();
-  })
-  .catch(async (e) => {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
-  });

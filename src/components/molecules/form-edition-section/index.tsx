@@ -26,7 +26,7 @@ import { Switch } from "@/components/ui/switch";
 
 function FormEdit() {
   const { setShowModal, infoSection } = useContext(Sectioncontext);
-  const { trigger } = useSWRMutation("sections", getSections);
+  const { trigger } = useSWRMutation("sections", () => getSections);
   const formSchema = z.object(editFormSchema);
 
   const createform = useForm<z.infer<typeof formSchema>>({

@@ -8,7 +8,7 @@ import { Sectioncontext } from "@/app/store/sections-context";
 import { ActionsFormEnums } from "@/enums";
 
 export function ButtonCreate() {
-  const { isMutating } = useSWRMutation("sections", getSections);
+  const { isMutating } = useSWRMutation("sections", () => getSections);
   const { setShowModal, setInfoSection } = useContext(Sectioncontext);
 
   const handleClick = async () => {

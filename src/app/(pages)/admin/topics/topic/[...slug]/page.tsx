@@ -4,7 +4,13 @@ import useSWR from "swr";
 import { QuestionsAsksProps } from "../../types";
 import { questionAsks } from "@/app/actions/questionsAsks";
 import { BoxError, Skeleton } from "@/components/atoms";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Bug, MessageCircleQuestion, Pencil, Eraser } from "lucide-react";
 
 import {
@@ -13,17 +19,20 @@ import {
 } from "@/components/molecules/Topic/types";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { ModalQuestions } from "@/components/molecules";
-import { useContext, useEffect } from "react";
+import { ModalQuestions, PaginationComponent } from "@/components/molecules";
+import { useCallback, useContext, useEffect } from "react";
 import TopicsContext from "@/app/store/topics-context";
 import { ActionsFormEnums } from "@/enums";
 import QuestionsContext from "@/app/store/questions-context";
+import AdminContext from "@/app/store/admin-context";
+import useSWRMutation from "swr/mutation";
 export default function QuestionsAsks({ params }: QuestionsAsksProps) {
+  const { pagination } = useContext(AdminContext);
   const { setShowModal, setAction, setIdTopic } = useContext(TopicsContext);
   const { setQuestions, setQuestion } = useContext(QuestionsContext);
   const { data, isValidating, error } = useSWR(
     "questionsAsks",
-    () => questionAsks(params.slug[0] as number),
+    () => questionAsks(params.slug[0] as number, pagination.skip),
     { revalidateOnFocus: false }
   );
 
@@ -39,21 +48,35 @@ export default function QuestionsAsks({ params }: QuestionsAsksProps) {
 
   const deleteQuestion = (id: number | undefined) => {
     if (!id) return;
-    const question = data.filter((item: QuestionsAsksType) => item.id === id);
+    const question = data.questions.filter(
+      (item: QuestionsAsksType) => item.id === id
+    );
     defaultActions(ActionsFormEnums.Delete);
     setQuestion(question[0]);
   };
 
   const editQuestion = (id: number | undefined) => {
     if (!id) return;
-    const question = data.filter((item: QuestionsAsksType) => item.id === id);
+    const question = data.questions.filter(
+      (item: QuestionsAsksType) => item.id === id
+    );
     defaultActions(ActionsFormEnums.Edit);
     setQuestion(question[0]);
   };
 
+  const { trigger } = useSWRMutation("questionsAsks", () =>
+    questionAsks(params.slug[0] as number, pagination.skip)
+  );
+  const refetch = useCallback(async () => await trigger(), [trigger]);
+
+  useEffect(() => {
+    if (!pagination) return;
+    refetch();
+  }, [pagination, refetch]);
+
   useEffect(() => {
     if (data) {
-      setQuestions(data);
+      setQuestions(data.questions);
     }
   }, [data, setQuestions]);
 
@@ -86,15 +109,15 @@ export default function QuestionsAsks({ params }: QuestionsAsksProps) {
           </BoxError>
         )}
 
-        {data && data.length === 0 && (
+        {data && data.questions.length === 0 && (
           <CardContent className="flex justify-center items-center">
             <p>O tópico não posssui conteúdo cadastrado.</p>
           </CardContent>
         )}
 
-        {data && data.length > 0 && !isValidating && !error && (
+        {data && data.questions.length > 0 && !isValidating && !error && (
           <CardContent>
-            {data.map((item: QuestionsAsksType) => (
+            {data.questions.map((item: QuestionsAsksType) => (
               <Alert
                 key={item.id}
                 className="mb-10 shadow-lg shadow-zinc-500/40"
@@ -143,6 +166,13 @@ export default function QuestionsAsks({ params }: QuestionsAsksProps) {
             ))}
           </CardContent>
         )}
+        <CardFooter className="text-xs text-muted-foreground">
+          <div className="flex flex-row justify-between content-center  w-full h-full">
+            {data && data.questions.length > 0 && !isValidating && !error && (
+              <PaginationComponent {...data.metadatas} />
+            )}
+          </div>
+        </CardFooter>
       </Card>
     </>
   );

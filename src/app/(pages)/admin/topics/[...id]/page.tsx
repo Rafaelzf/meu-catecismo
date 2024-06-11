@@ -24,25 +24,24 @@ const ModalTopic = dynamic(() => import("@/components/molecules/modal-topic"), {
 });
 
 export default function TopicsAdmin({ params }: TopicProps) {
-  const { setTopics, idSection } = useContext(TopicsContext);
+  const { setTopics } = useContext(TopicsContext);
   const { pagination } = useContext(AdminContext);
 
   const { data, error, isValidating } = useSWR(
     "topics",
-    () => getTopics(idSection, pagination.skip),
+    () => getTopics(params.id[0] as number, pagination.skip),
     { revalidateOnFocus: false }
   );
 
   const { trigger } = useSWRMutation("topics", () =>
-    getTopics(idSection, pagination.skip)
+    getTopics(params.id[0] as number, pagination.skip)
   );
   const refetch = useCallback(async () => await trigger(), [trigger]);
 
   useEffect(() => {
-    if (!idSection && !pagination) return;
-    console.log(pagination);
+    if (!pagination) return;
     refetch();
-  }, [idSection, pagination, refetch]);
+  }, [pagination, refetch]);
 
   useEffect(() => {
     if (!error && !isValidating && data && data.topics) {

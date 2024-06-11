@@ -4,7 +4,6 @@ import { PrismaClient } from "@prisma/client";
 import { withAccelerate } from "@prisma/extension-accelerate";
 const prisma = new PrismaClient().$extends(withAccelerate());
 import { corsSettings } from "../constants";
-import { revalidatePath } from "next/cache";
 
 export async function GET(req: Request) {
   if (req.method !== "GET") {
@@ -37,8 +36,9 @@ export async function GET(req: Request) {
         },
       });
     }
-
-    const total = await prisma.topic.count();
+    const total = await prisma.topic.count({
+      where: { parentSectionId: Number(parentSectionId) },
+    });
 
     const returnData = {
       topics: allTopics,

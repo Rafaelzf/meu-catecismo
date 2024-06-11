@@ -10,7 +10,7 @@ import { toast } from "@/components/ui/use-toast";
 
 function FormDelete() {
   const { setShowModal, infoSection } = useContext(Sectioncontext);
-  const { trigger, isMutating } = useSWRMutation("sections", getSections);
+  const { trigger, isMutating } = useSWRMutation("sections", () => getSections);
 
   async function handleDeleteClick() {
     const response = await Delete(infoSection?.id);

@@ -5,9 +5,11 @@ export const instance = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}`,
 });
 
-export async function getSections() {
+export async function getSections(skip?: number, take?: number) {
   try {
-    const response = await instance.get("/sections");
+    const response = await instance.get("/sections", {
+      params: { skip, take },
+    });
     return response.data;
   } catch (error: any) {
     throw new Error(

@@ -12,22 +12,51 @@ export async function GET(req: Request) {
 
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("topicId");
+  const take = Number(searchParams.get("take")) || 4;
+  const skip = Number(searchParams.get("skip")) || 0;
 
   try {
     let allQuestions;
 
     if (id === null || id === undefined) {
-      allQuestions = await prisma.questionsAsks.findMany();
+      allQuestions = await prisma.questionsAsks.findMany({
+        skip,
+        take,
+        orderBy: {
+          updateDate: "desc",
+        },
+      });
     } else {
       allQuestions = await prisma.questionsAsks.findMany({
+        skip,
+        take,
         where: { topicId: Number(id) },
+        orderBy: {
+          updateDate: "desc",
+        },
         include: {
           asks: true,
         },
       });
     }
 
-    return Response.json(allQuestions, corsSettings);
+    const total = await prisma.questionsAsks.count({
+      where: { topicId: Number(id) },
+    });
+
+    const returnData = {
+      questions: allQuestions,
+      metadatas: {
+        hasNextPage: skip + take < total,
+        hasPrevPage: skip > 0,
+        totalPages: Math.ceil(total / take),
+        currentPage: Math.ceil(skip / take) + 1,
+        skip,
+        take,
+      },
+    };
+
+    return Response.json(returnData, corsSettings);
   } catch (error) {
     console.error(error);
     return Response.json({
