@@ -32,6 +32,14 @@ export default function PaginationComponent({
     e.preventDefault();
   };
 
+  const handleClickPage = async (e: React.MouseEvent, index: number) => {
+    const pageNumber = index + 1;
+    const skipPage = pageNumber * 4 - 4;
+
+    setPagination({ take: take, skip: skipPage });
+    e.preventDefault();
+  };
+
   return (
     <Pagination
       className={
@@ -53,6 +61,7 @@ export default function PaginationComponent({
               isActive={currentPage !== index + 1}
               isCurrentpage={currentPage === index + 1}
               key={index}
+              onClick={(e) => handleClickPage(e, index)}
             >
               {currentPage === index + 1 ? currentPage : index + 1}
             </PaginationLink>
