@@ -26,7 +26,7 @@ import { toast } from "@/components/ui/use-toast";
 
 function FormCreate() {
   const { setShowModal } = useContext(Sectioncontext);
-  const { trigger } = useSWRMutation("sections", getSections);
+  const { trigger } = useSWRMutation("sections", () => getSections);
   const formSchema = z.object(createFormSchema);
 
   const createform = useForm<z.infer<typeof formSchema>>({
