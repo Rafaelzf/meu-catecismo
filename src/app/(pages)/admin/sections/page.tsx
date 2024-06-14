@@ -33,6 +33,8 @@ export default function SectionsAdmin() {
     isLoading,
   } = useSWR("sections", () => getSections(pagination.skip));
 
+  console.log({ sections });
+
   const { trigger } = useSWRMutation("questionsAsks", () =>
     getSections(pagination.skip)
   );

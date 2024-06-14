@@ -17,5 +17,5 @@ export type SendSection = {
   slug?: string;
   active?: boolean;
   message: string;
-  icon?: null;
+  icon?: string;
 };

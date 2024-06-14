@@ -5,6 +5,7 @@ import { z } from "zod";
 import { Loader2 } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+
 import {
   Form,
   FormField,
@@ -23,6 +24,7 @@ import { createNewSection, getSections } from "@/app/actions/sections";
 import Sectioncontext from "@/app/store/sections-context";
 import useSWRMutation from "swr/mutation";
 import { toast } from "@/components/ui/use-toast";
+import { PutBlobResult } from "@vercel/blob";
 
 function FormCreate() {
   const { setShowModal } = useContext(Sectioncontext);
@@ -33,17 +35,39 @@ function FormCreate() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
+      image: undefined,
       message: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const { title, message } = values;
+    const { title, message, image } = values;
     if (!title || !message) return;
+
+    const regex = /[^\\]+(?=\.[^\.]+$)/;
+    const fileNameWithoutExtension = image && image.match(regex)[0];
+    let newBlob;
+    if (fileNameWithoutExtension) {
+      try {
+        const responseBlob = await fetch(
+          `/api/upload?filename=${fileNameWithoutExtension}`,
+          {
+            method: "POST",
+            body: image,
+          }
+        );
+
+        newBlob = (await responseBlob.json()) as PutBlobResult;
+      } catch (error) {
+        console.log(error);
+        newBlob = null;
+      }
+    }
 
     const sendData: SendSection = {
       title,
       message,
+      ...(newBlob && { icon: newBlob.url || undefined }),
     };
 
     const response = await createNewSection(sendData);
@@ -68,6 +92,25 @@ function FormCreate() {
                 <Input placeholder="Título" {...field} />
               </FormControl>
               <FormDescription>Escreva o título da seção.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={createform.control}
+          name="image"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Imagem da seção</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Imagem"
+                  type="file"
+                  accept="image/png, image/jpeg, image/webp"
+                  {...field}
+                />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}

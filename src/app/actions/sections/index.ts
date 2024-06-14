@@ -27,6 +27,7 @@ export async function createNewSection(params: SendSection) {
       title: params.title,
       slug: slugify(params.title, { lower: true }),
       message: params.message,
+      icon: params.icon || null,
     });
 
     return Response.json(response);

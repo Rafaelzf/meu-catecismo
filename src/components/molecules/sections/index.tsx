@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   Card,
   CardDescription,
@@ -17,14 +18,24 @@ export default async function PageSections() {
   return (
     <div className="gap-10 sm:gap-4 grid sm:grid-cols-1  md:grid-cols-3 ">
       {sections &&
-        sections.map((section: Section) => (
+        sections.sections.map((section: Section) => (
           <>
             {section.active && (
               <Card key={section.id}>
                 <CardHeader>
                   <CardTitle className="flex justify-start gap-2 items-center">
                     <div className="rounded-full bg-primary text-primary-foreground h-10 w-10 flex justify-center items-center">
-                      <Sparkles className="h-6 w-6" />
+                      {section.icon ? (
+                        <Image
+                          priority
+                          src={section?.icon}
+                          alt="Image"
+                          width={50}
+                          height={50}
+                        />
+                      ) : (
+                        <Sparkles className="h-6 w-6" />
+                      )}
                     </div>
                     <p className="scroll-m-20 text-lg font-semibold tracking-tight  text-orange-800">
                       {section.title}
@@ -36,10 +47,10 @@ export default async function PageSections() {
                 </CardHeader>
 
                 <CardFooter>
-                <Link href={`/section/${section.id}`}>
-                  <Button className="w-full bg-primary text-primary-foreground hover:bg-destructive">
-                    Ler sobre
-                  </Button>
+                  <Link href={`/section/${section.id}`}>
+                    <Button className="w-full bg-primary text-primary-foreground hover:bg-destructive">
+                      Ler sobre
+                    </Button>
                   </Link>
                 </CardFooter>
               </Card>
