@@ -3,7 +3,7 @@ export type Topic = {
   parentSlug: string;
   title: string;
   parentSectionId: number;
-  image?: null;
+  image?: string;
   questionsAsks?: QuestionsAsks[];
   active?: boolean;
   createDate?: string;

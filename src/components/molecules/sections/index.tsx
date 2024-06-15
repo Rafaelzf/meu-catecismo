@@ -32,6 +32,7 @@ export default async function PageSections() {
                           alt="Image"
                           width={50}
                           height={50}
+                          className="rounded-full"
                         />
                       ) : (
                         <Sparkles className="h-6 w-6" />

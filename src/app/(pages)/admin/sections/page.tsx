@@ -19,6 +19,7 @@ import { Skeleton } from "@/components/atoms";
 import AdminContext from "@/app/store/admin-context";
 import { useCallback, useContext, useEffect } from "react";
 import useSWRMutation from "swr/mutation";
+import TopicsContext from "@/app/store/topics-context";
 
 const ModalSection = dynamic(
   () => import("@/components/molecules/modal-section"),
@@ -27,13 +28,12 @@ const ModalSection = dynamic(
 
 export default function SectionsAdmin() {
   const { pagination } = useContext(AdminContext);
+  const { setSections } = useContext(TopicsContext);
   const {
     data: sections,
     error,
     isLoading,
   } = useSWR("sections", () => getSections(pagination.skip));
-
-  console.log({ sections });
 
   const { trigger } = useSWRMutation("questionsAsks", () =>
     getSections(pagination.skip)
@@ -45,6 +45,11 @@ export default function SectionsAdmin() {
     if (!pagination) return;
     refetch();
   }, [pagination, refetch]);
+
+  useEffect(() => {
+    if (!sections?.sections) return;
+    setSections(sections.sections);
+  }, [sections, setSections]);
 
   return (
     <>

@@ -8,5 +8,6 @@ export const createFormSchema = {
     })
     .max(20, {
       message: "O título deve conter no máximo 20 caracteres.",
-    })
+    }),
+  image: z.any(),
 };

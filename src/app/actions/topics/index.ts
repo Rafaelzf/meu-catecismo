@@ -33,6 +33,7 @@ export async function createNewTopic(params: Topic) {
       parentSectionId: params.parentSectionId,
       title: params.title,
       parentSlug: params.parentSlug,
+      image: params.image || null,
     });
 
     return Response.json(response);

@@ -10,11 +10,12 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { MessageCircleQuestion } from "lucide-react";
 export default async function TopicPage({ params }: TopicProps) {
   const questionsAsks = await questionAsks(params.id[0] as number);
-  console.log(questionsAsks);
+
   return (
     <div className="py-10 gap-10 sm:gap-4 grid sm:grid-cols-1  md:grid-cols-2">
       {questionsAsks &&
-        questionsAsks.map((question: QuestionsAsksType) => (
+        questionsAsks.questions &&
+        questionsAsks.questions.map((question: QuestionsAsksType) => (
           <Alert
             key={question.id}
             className="mb-10 shadow-lg shadow-zinc-500/40"

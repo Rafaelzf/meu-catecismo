@@ -75,6 +75,7 @@ export async function POST(req: Request) {
             {
               title: body.title,
               parentSlug: body.parentSlug,
+              image: body.image || null,
             },
           ],
         },

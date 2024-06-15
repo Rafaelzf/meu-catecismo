@@ -13,6 +13,8 @@ import { Section } from "../sections/types";
 import { convertDate } from "@/lib/utils";
 
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import TopicsContext from "@/app/store/topics-context";
 
 export function SectionsListAdmin({ sections }: { sections: Section[] }) {
   const router = useRouter();

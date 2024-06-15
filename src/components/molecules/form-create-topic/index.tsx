@@ -23,13 +23,15 @@ import useSWRMutation from "swr/mutation";
 import { toast } from "@/components/ui/use-toast";
 import { createNewTopic, getTopics } from "@/app/actions/topics";
 import { Topic } from "../Topic/types";
+import { uploadImage } from "@/lib/utils";
 
 function FormCreateTopic() {
   const { setShowModal, idSection, sections } = useContext(TopicsContext);
-  const { trigger } = useSWRMutation("topics", () => getTopics(idSection));
+  const id = Number(idSection);
+  const { trigger } = useSWRMutation("topics", () => getTopics(id));
   const formSchema = z.object(createFormSchema);
 
-  const sectionSlug = sections.filter((section) => section.id === idSection);
+  const sectionSlug = sections.filter((section) => section.id === id);
 
   const createform = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -41,12 +43,16 @@ function FormCreateTopic() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const { title } = values;
 
-    if (!title || !idSection || !sectionSlug.length) return;
+    if (!title || !id || !sectionSlug.length) return;
+
+    const image = createform.getValues("image")[0];
+    const imageFile = await uploadImage(image);
 
     const sendData: Topic = {
-      parentSectionId: idSection,
+      parentSectionId: id,
       title,
       parentSlug: sectionSlug[0].slug || "",
+      image: imageFile || undefined,
     };
 
     const response = await createNewTopic(sendData);
@@ -71,6 +77,25 @@ function FormCreateTopic() {
                 <Input placeholder="Tópico" {...field} />
               </FormControl>
               <FormDescription>Escreva o nome do tópico.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={createform.control}
+          name="image"
+          render={() => (
+            <FormItem>
+              <FormLabel>Imagem da seção</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Imagem"
+                  type="file"
+                  accept="image/png, image/jpeg, image/webp"
+                  {...createform.register("image")}
+                />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}

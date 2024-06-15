@@ -25,6 +25,8 @@ import Sectioncontext from "@/app/store/sections-context";
 import useSWRMutation from "swr/mutation";
 import { toast } from "@/components/ui/use-toast";
 import { PutBlobResult } from "@vercel/blob";
+import axios from "axios";
+import { uploadImage } from "@/lib/utils";
 
 function FormCreate() {
   const { setShowModal } = useContext(Sectioncontext);
@@ -41,33 +43,16 @@ function FormCreate() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const { title, message, image } = values;
+    const { title, message } = values;
     if (!title || !message) return;
+    const image = createform.getValues("image")[0];
 
-    const regex = /[^\\]+(?=\.[^\.]+$)/;
-    const fileNameWithoutExtension = image && image.match(regex)[0];
-    let newBlob;
-    if (fileNameWithoutExtension) {
-      try {
-        const responseBlob = await fetch(
-          `/api/upload?filename=${fileNameWithoutExtension}`,
-          {
-            method: "POST",
-            body: image,
-          }
-        );
-
-        newBlob = (await responseBlob.json()) as PutBlobResult;
-      } catch (error) {
-        console.log(error);
-        newBlob = null;
-      }
-    }
+    const imageFile = await uploadImage(image);
 
     const sendData: SendSection = {
       title,
       message,
-      ...(newBlob && { icon: newBlob.url || undefined }),
+      icon: imageFile || undefined,
     };
 
     const response = await createNewSection(sendData);
@@ -100,7 +85,7 @@ function FormCreate() {
         <FormField
           control={createform.control}
           name="image"
-          render={({ field }) => (
+          render={() => (
             <FormItem>
               <FormLabel>Imagem da seção</FormLabel>
               <FormControl>
@@ -108,7 +93,7 @@ function FormCreate() {
                   placeholder="Imagem"
                   type="file"
                   accept="image/png, image/jpeg, image/webp"
-                  {...field}
+                  {...createform.register("image")}
                 />
               </FormControl>
               <FormMessage />

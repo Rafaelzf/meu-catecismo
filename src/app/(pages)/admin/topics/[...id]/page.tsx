@@ -24,7 +24,7 @@ const ModalTopic = dynamic(() => import("@/components/molecules/modal-topic"), {
 });
 
 export default function TopicsAdmin({ params }: TopicProps) {
-  const { setTopics } = useContext(TopicsContext);
+  const { setTopics, setIdSection } = useContext(TopicsContext);
   const { pagination } = useContext(AdminContext);
 
   const { data, error, isValidating } = useSWR(
@@ -48,6 +48,12 @@ export default function TopicsAdmin({ params }: TopicProps) {
       setTopics(data.topics);
     }
   }, [data, error, isValidating, setTopics]);
+
+  useEffect(() => {
+    if (params.id[0]) {
+      setIdSection(params.id[0] as number);
+    }
+  }, [params.id, setIdSection]);
 
   return (
     <>
