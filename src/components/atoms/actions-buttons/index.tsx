@@ -14,9 +14,18 @@ interface Props {
   title: string;
   message: string;
   active: boolean;
+  slug: string;
+  icon?: string;
 }
 
-export function ActionsButtons({ id, title, message, active }: Props) {
+export function ActionsButtons({
+  id,
+  title,
+  message,
+  active,
+  slug,
+  icon,
+}: Props) {
   const { setShowModal, setInfoSection } = useContext(Sectioncontext);
 
   async function handleDeleteClick() {
@@ -35,6 +44,8 @@ export function ActionsButtons({ id, title, message, active }: Props) {
       title: title,
       message: message,
       active: active,
+      slug: slug,
+      icon: icon,
       sectionType: ActionsFormEnums.Edit,
     }));
     setShowModal(true);

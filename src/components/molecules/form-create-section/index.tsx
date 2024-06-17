@@ -24,9 +24,7 @@ import { createNewSection, getSections } from "@/app/actions/sections";
 import Sectioncontext from "@/app/store/sections-context";
 import useSWRMutation from "swr/mutation";
 import { toast } from "@/components/ui/use-toast";
-import { PutBlobResult } from "@vercel/blob";
-import axios from "axios";
-import { uploadImage } from "@/lib/utils";
+import { uploadImage } from "@/app/actions/upload";
 
 function FormCreate() {
   const { setShowModal } = useContext(Sectioncontext);
@@ -45,8 +43,8 @@ function FormCreate() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const { title, message } = values;
     if (!title || !message) return;
-    const image = createform.getValues("image")[0];
 
+    const image = createform.getValues("image")[0];
     const imageFile = await uploadImage(image);
 
     const sendData: SendSection = {
@@ -92,7 +90,7 @@ function FormCreate() {
                 <Input
                   placeholder="Imagem"
                   type="file"
-                  accept="image/png, image/jpeg, image/webp"
+                  accept="image/png, image/jpeg, image/webp, image/gif"
                   {...createform.register("image")}
                 />
               </FormControl>

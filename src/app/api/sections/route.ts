@@ -73,11 +73,18 @@ export async function PATCH(req: Request) {
   if (req.method !== "PATCH") {
     return new Response("Method not allowed", { status: 405 });
   }
+
   try {
     const body = await req.json();
+
     const user = await prisma.sections.update({
       where: { id: body.id },
-      data: { title: body.title, message: body.message, active: body.active },
+      data: {
+        title: body.title,
+        message: body.message,
+        active: body.active,
+        icon: body.icon || null,
+      },
     });
     return Response.json(user, corsSettings);
   } catch (error) {

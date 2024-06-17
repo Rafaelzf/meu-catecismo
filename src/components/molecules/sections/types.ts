@@ -4,7 +4,7 @@ export type Section = {
   slug: string;
   active: boolean;
   message: string;
-  icon?: null;
+  icon?: string;
   createDate?: string;
   updateDate?: string;
 };

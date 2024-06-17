@@ -46,10 +46,6 @@ export default function SectionsAdmin() {
     refetch();
   }, [pagination, refetch]);
 
-  useEffect(() => {
-    if (!sections?.sections) return;
-    setSections(sections.sections);
-  }, [sections, setSections]);
 
   return (
     <>

@@ -14,7 +14,7 @@ export type InfoSectionType = {
   title?: string;
   slug?: string;
   message?: string;
-  image?: string;
+  icon?: string;
   active?: boolean;
 };
 

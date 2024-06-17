@@ -37,15 +37,17 @@ export async function createNewSection(params: SendSection) {
 }
 
 export async function Edit(sendData: SendSection) {
-  const { id, title, message, active } = sendData;
+  const { id, title, message, active, icon } = sendData;
   if (!id || active === null || active === undefined || !title || !message)
     return;
+
   try {
     const response = await instance.patch(`/sections`, {
       id,
       title,
       message,
       active,
+      icon,
     });
     return response;
   } catch (error) {

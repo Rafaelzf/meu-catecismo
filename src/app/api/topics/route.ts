@@ -103,6 +103,7 @@ export async function PATCH(req: Request) {
       data: {
         title: body.title,
         active: body.active,
+        image: body.image || null,
       },
     });
 

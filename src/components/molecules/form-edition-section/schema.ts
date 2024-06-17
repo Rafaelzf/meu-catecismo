@@ -18,4 +18,5 @@ export const editFormSchema = {
       message: "A mensagem deve conter no máximo 100 caracteres.",
     }),
   active: z.boolean(),
+  image: z.any(),
 };

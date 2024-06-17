@@ -23,7 +23,7 @@ import useSWRMutation from "swr/mutation";
 import { toast } from "@/components/ui/use-toast";
 import { createNewTopic, getTopics } from "@/app/actions/topics";
 import { Topic } from "../Topic/types";
-import { uploadImage } from "@/lib/utils";
+import { uploadImage } from "@/app/actions/upload";
 
 function FormCreateTopic() {
   const { setShowModal, idSection, sections } = useContext(TopicsContext);
@@ -92,7 +92,7 @@ function FormCreateTopic() {
                 <Input
                   placeholder="Imagem"
                   type="file"
-                  accept="image/png, image/jpeg, image/webp"
+                  accept="image/png, image/jpeg, image/webp, image/gif"
                   {...createform.register("image")}
                 />
               </FormControl>

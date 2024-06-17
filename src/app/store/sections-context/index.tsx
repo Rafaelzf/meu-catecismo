@@ -15,7 +15,7 @@ export const Sectioncontext = createContext<PropsSectionTypes>({
     title: undefined,
     slug: undefined,
     message: undefined,
-    image: undefined,
+    icon: undefined,
     active: undefined,
   },
   setInfoSection: () => {},
@@ -31,7 +31,7 @@ export function SectioncontextProvider({
     title: undefined,
     slug: undefined,
     message: undefined,
-    image: undefined,
+    icon: undefined,
     active: undefined,
   });
 

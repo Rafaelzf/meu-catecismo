@@ -44,7 +44,7 @@ export async function createNewTopic(params: Topic) {
 }
 
 export async function editTopic(sendData: Topic) {
-  const { id, title, active } = sendData;
+  const { id, title, active, image } = sendData;
   if (!id || active === null || active === undefined || !title) return;
 
   try {
@@ -52,6 +52,7 @@ export async function editTopic(sendData: Topic) {
       id,
       title,
       active,
+      image,
     });
     return response;
   } catch (error) {
