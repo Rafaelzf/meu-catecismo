@@ -24,8 +24,8 @@ export default async function PageSections() {
               <Card key={section.id}>
                 <CardHeader>
                   <CardTitle className="flex justify-start gap-2 items-center">
-                    <div className="rounded-full bg-primary text-primary-foreground h-10 w-10 flex justify-center items-center">
-                      {section.icon ? (
+                    {section.icon ? (
+                      <div className="rounded-full flex justify-center items-center">
                         <Image
                           src={section?.icon}
                           alt="Image"
@@ -33,10 +33,13 @@ export default async function PageSections() {
                           width={40}
                           className="rounded-full"
                         />
-                      ) : (
+                      </div>
+                    ) : (
+                      <div className="rounded-full bg-primary text-primary-foreground h-10 w-10 flex justify-center items-center">
                         <Sparkles className="h-6 w-6" />
-                      )}
-                    </div>
+                      </div>
+                    )}
+
                     <p className="scroll-m-20 text-lg font-semibold tracking-tight  text-orange-800">
                       {section.title}
                     </p>
