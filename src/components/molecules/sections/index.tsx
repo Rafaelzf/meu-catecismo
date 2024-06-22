@@ -29,7 +29,8 @@ export default async function PageSections() {
                         <Image
                           src={section?.icon}
                           alt="Image"
-                          fill
+                          height={40}
+                          width={40}
                           className="rounded-full"
                         />
                       ) : (

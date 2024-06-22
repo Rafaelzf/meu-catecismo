@@ -49,7 +49,12 @@ export default async function Section({ params }: SectionProps) {
 
                 <CardContent className="p-0 bg-slate-200 w-full h-40 flex justify-center items-center">
                   {topic.image ? (
-                    <Image src={topic.image} alt="Image" fill className="p-0" />
+                    <Image
+                      src={topic.image}
+                      alt="Image"
+                      fill
+                      className="p-0 w-full h-20"
+                    />
                   ) : (
                     <div className=" flex justify-center items-center">
                       <ImageUp className="h-8 w-8 mr-1 text-slate-600" />{" "}
