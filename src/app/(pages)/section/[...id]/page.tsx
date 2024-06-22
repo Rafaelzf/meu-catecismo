@@ -36,7 +36,7 @@ export default async function Section({ params }: SectionProps) {
                 key={topic.id}
                 className="flex flex-col justify-start items-center"
               >
-                <CardHeader className="p-y-2 bg-orange-800 w-full rounded-t-lg">
+                <CardHeader className="p-y-2 bg-gradient-to-r from-violet-500 to-fuchsia-500 w-full rounded-t-lg">
                   <CardTitle className="flex justify-center gap-4 items-center ">
                     <div className="rounded-full bg-white text-orange-800 h-10 w-10 flex justify-center items-center">
                       <Sparkles className="h-6 w-6" />
@@ -52,7 +52,6 @@ export default async function Section({ params }: SectionProps) {
                     <Image
                       src={topic.image}
                       alt="Image"
-                      fill
                       className="p-0 w-full h-20"
                     />
                   ) : (
