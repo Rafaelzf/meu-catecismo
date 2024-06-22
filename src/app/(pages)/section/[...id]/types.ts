@@ -4,4 +4,5 @@ export type SectionProps = {
 
 export type SectionParam = {
   id: unknown[];
+  userId: unknown[];
 };

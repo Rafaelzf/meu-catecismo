@@ -142,7 +142,6 @@ function FormEdit() {
                     </Button>
                     <AspectRatio ratio={16 / 16} className="w-full">
                       <Image
-                        priority
                         fill
                         src={infoSection?.icon}
                         alt="Image"

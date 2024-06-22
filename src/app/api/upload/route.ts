@@ -1,4 +1,4 @@
-import { put, del } from "@vercel/blob";
+import { put, del, BlobAccessError } from "@vercel/blob";
 import { NextResponse } from "next/server";
 import { customAlphabet } from "nanoid";
 
@@ -25,10 +25,18 @@ export async function POST(req: Request): Promise<Response> {
 
     return NextResponse.json(blob);
   } catch (error) {
-    console.error(error);
-    return Response.json({
-      error: "Houve algum erro ao realizar a operação de gravacao das imagens.",
-    });
+    if (error instanceof BlobAccessError) {
+      console.error("Erro específico do blob:", error);
+      return Response.json({
+        error:
+          "Houve algum erro ao realizar a operação de gravacao das imagens.",
+      });
+    } else {
+      return Response.json({
+        error:
+          "Houve algum erro ao realizar a operação de gravacao das imagens.",
+      });
+    }
   }
 }
 

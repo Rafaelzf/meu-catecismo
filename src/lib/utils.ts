@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -15,4 +16,17 @@ export function convertDate(date?: string) {
 
   const dataFormatada = `${dia}/${mes}/${ano}`;
   return dataFormatada;
+}
+
+export function hashUserPassword(password: string) {
+  const salt = bcrypt.genSaltSync(10);
+  const hashedPassword = bcrypt.hashSync(password, salt);
+  return hashedPassword;
+}
+
+export function verifyUserPassword(
+  storedPassword: string,
+  suppliedPassword: string
+) {
+  return bcrypt.compareSync(suppliedPassword, storedPassword);
 }

@@ -52,3 +52,17 @@ model Ask {
   createDate    DateTime       @default(now())
   updateDate    DateTime       @updatedAt
 }
+
+model User {
+  id       Int       @id @default(autoincrement())
+  password String    @unique
+  name     String?   @unique
+  sessions Session[]
+}
+
+model Session {
+  id        String    @id
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  expiresAt DateTime?
+}

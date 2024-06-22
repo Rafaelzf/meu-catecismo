@@ -3,7 +3,6 @@ import { PrismaClient } from "@prisma/client";
 import { withAccelerate } from "@prisma/extension-accelerate";
 const prisma = new PrismaClient().$extends(withAccelerate());
 import { corsSettings } from "../constants";
-import axios from "axios";
 
 export async function GET(req: Request) {
   if (req.method !== "GET") {

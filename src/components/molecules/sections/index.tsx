@@ -27,11 +27,9 @@ export default async function PageSections() {
                     <div className="rounded-full bg-primary text-primary-foreground h-10 w-10 flex justify-center items-center">
                       {section.icon ? (
                         <Image
-                          priority
                           src={section?.icon}
                           alt="Image"
-                          width={50}
-                          height={50}
+                          fill
                           className="rounded-full"
                         />
                       ) : (
