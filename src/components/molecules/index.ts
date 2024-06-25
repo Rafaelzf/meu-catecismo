@@ -15,6 +15,7 @@ import FormDeleteQuestions from "./form-delete-questions";
 import FormCreateQuestions from "./form-create-questions/page";
 import PaginationComponent from "./pagination";
 import Auth from "./form-auth";
+import PaginationComponentPages from "./paginationPages";
 
 export {
   PageSections,
@@ -32,5 +33,6 @@ export {
   FormCreateQuestions,
   FormDeleteQuestions,
   PaginationComponent,
+  PaginationComponentPages,
   Auth,
 };

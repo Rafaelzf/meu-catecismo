@@ -20,7 +20,6 @@ import { getUser } from "@/app/actions/user";
 import { createAuthSession } from "@/app/actions/user/auth";
 import { useRouter } from "next/navigation";
 import { verifyUserPassword } from "@/lib/utils";
-// import { getUser } from "@/app/actions/user";
 
 export default function Auth() {
   const router = useRouter();
@@ -45,8 +44,6 @@ export default function Auth() {
     }
 
     const isValidPassword = verifyUserPassword(user.password, password);
-
-    console.log({ isValidPassword });
 
     if (!isValidPassword) {
       createform.setError("password", {

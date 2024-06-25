@@ -1,4 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { TopicProps } from "./types";
 import { questionAsks } from "@/app/actions/questionsAsks";
 import {
@@ -8,7 +7,7 @@ import {
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { MessageCircleQuestion } from "lucide-react";
-import { PaginationComponent } from "@/components/molecules";
+import { PaginationComponentPages } from "@/components/molecules";
 export default async function TopicPage({ params }: TopicProps) {
   const questionsAsks = await questionAsks(params.id[0] as number);
 
@@ -53,7 +52,7 @@ export default async function TopicPage({ params }: TopicProps) {
       </div>
 
       <div className="text-xs text-muted-foreground w-full mt-10  rounded-lg border border-zinc-200 bg-white py-5">
-        <PaginationComponent {...questionsAsks.metadatas} />
+        <PaginationComponentPages {...questionsAsks.metadatas} />
       </div>
     </>
   );

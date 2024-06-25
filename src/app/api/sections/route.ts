@@ -19,7 +19,7 @@ export async function GET(req: Request) {
       skip,
       take,
       orderBy: {
-        updateDate: "desc",
+        updateDate: "asc",
       },
     });
     allSections.length === 0 && (await init());

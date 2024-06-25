@@ -1,5 +1,3 @@
-"use client";
-import { AdminContextProvider } from "@/app/store/admin-context";
 import { ReactNode } from "react";
 
 export interface LayoutAdminProps {
@@ -7,7 +5,7 @@ export interface LayoutAdminProps {
 }
 
 function LayoutAdmin({ children }: LayoutAdminProps) {
-  return <AdminContextProvider>{children}</AdminContextProvider>;
+  return <div>{children}</div>;
 }
 
 export default LayoutAdmin;

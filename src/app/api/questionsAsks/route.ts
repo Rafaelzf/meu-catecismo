@@ -23,7 +23,7 @@ export async function GET(req: Request) {
         skip,
         take,
         orderBy: {
-          updateDate: "desc",
+          updateDate: "asc",
         },
       });
     } else {
@@ -32,7 +32,7 @@ export async function GET(req: Request) {
         take,
         where: { topicId: Number(id) },
         orderBy: {
-          updateDate: "desc",
+          updateDate: "asc",
         },
         include: {
           asks: true,
