@@ -6,19 +6,20 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Sparkles } from "lucide-react";
+import { BookMarked } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section } from "./types";
-import { getSections } from "@/app/actions/sections";
 import Link from "next/link";
 
-export default async function PageSections() {
-  const sections = await getSections();
-
+export default async function PageSections({
+  sections,
+}: {
+  sections: Section[];
+}) {
   return (
     <div className="gap-10 sm:gap-4 grid sm:grid-cols-1  md:grid-cols-3 ">
       {sections &&
-        sections.sections.map((section: Section) => (
+        sections.map((section: Section) => (
           <>
             {section.active && (
               <Card key={section.id}>
@@ -36,7 +37,7 @@ export default async function PageSections() {
                       </div>
                     ) : (
                       <div className="rounded-full bg-primary text-primary-foreground h-10 w-10 flex justify-center items-center">
-                        <Sparkles className="h-6 w-6" />
+                        <BookMarked className="h-6 w-6" />
                       </div>
                     )}
 
@@ -44,7 +45,7 @@ export default async function PageSections() {
                       {section.title}
                     </p>
                   </CardTitle>
-                  <CardDescription className="leading-6">
+                  <CardDescription className="leading-6 h-20">
                     {section.message}
                   </CardDescription>
                 </CardHeader>

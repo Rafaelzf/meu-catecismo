@@ -8,7 +8,7 @@ import {
 import { SectionProps } from "./types";
 import { getTopics } from "@/app/actions/topics";
 import { Topic } from "@/components/molecules/Topic/types";
-import { Sparkles, Squirrel, ImageUp } from "lucide-react";
+import { BookMarked, Squirrel, ImageUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { PaginationComponentPages } from "@/components/molecules";
@@ -16,8 +16,6 @@ export default async function Section({ params, searchParams }: SectionProps) {
   const idSection = params.id[0] as number;
   const skip = Number(searchParams.skip);
   const take = (searchParams.take && Number(searchParams.take)) || 6;
-
-
 
   const topics = await getTopics(idSection, skip, take);
   return (
@@ -44,7 +42,7 @@ export default async function Section({ params, searchParams }: SectionProps) {
                 <CardHeader className="p-y-2 bg-orange-800 w-full rounded-t-lg">
                   <CardTitle className="flex justify-center gap-4 items-center ">
                     <div className="rounded-full bg-white text-orange-800 h-10 w-10 flex justify-center items-center">
-                      <Sparkles className="h-6 w-6" />
+                      <BookMarked className="h-6 w-6" />
                     </div>
                     <p className="scroll-m-20 text-lg font-semibold tracking-tight  text-white">
                       {topic.title}
@@ -67,11 +65,20 @@ export default async function Section({ params, searchParams }: SectionProps) {
                 </CardContent>
 
                 <CardFooter className="w-full p-y-1 mt-5">
-                  <Link href={`/topic/${topic.id}`} className="w-full block">
-                    <Button className="w-full bg-primary text-primary-foreground hover:bg-destructive">
-                      Ler sobre
+                  {topic.questionsAsks?.length ? (
+                    <Link href={`/topic/${topic.id}`} className="w-full block">
+                      <Button className="w-full bg-primary text-primary-foreground hover:bg-destructive">
+                        Ler sobre
+                      </Button>
+                    </Link>
+                  ) : (
+                    <Button
+                      className="w-full bg-slate-200 text-slate-500 "
+                      disabled
+                    >
+                      Ainda sem conteúdo
                     </Button>
-                  </Link>
+                  )}
                 </CardFooter>
               </Card>
             ))}
