@@ -65,20 +65,11 @@ export default async function Section({ params, searchParams }: SectionProps) {
                 </CardContent>
 
                 <CardFooter className="w-full p-y-1 mt-5">
-                  {topic.questionsAsks?.length ? (
-                    <Link href={`/topic/${topic.id}`} className="w-full block">
-                      <Button className="w-full bg-primary text-primary-foreground hover:bg-destructive">
-                        Ler sobre
-                      </Button>
-                    </Link>
-                  ) : (
-                    <Button
-                      className="w-full bg-slate-200 text-slate-500 "
-                      disabled
-                    >
-                      Ainda sem conteúdo
+                  <Link href={`/topic/${topic.id}`} className="w-full block">
+                    <Button className="w-full bg-primary text-primary-foreground hover:bg-destructive">
+                      Ler sobre
                     </Button>
-                  )}
+                  </Link>
                 </CardFooter>
               </Card>
             ))}
