@@ -56,7 +56,8 @@ function FormEditTopic() {
       .finally(() => !del && setShowModal(false));
   };
 
-  const areThereQuestions = data && data.length > 0 && !error && !isValidating;
+  const areThereQuestions =
+    data && data.questions.length > 0 && !error && !isValidating;
 
   const defaultSendValues = {
     title: currentTopic?.title || "",
@@ -235,7 +236,7 @@ function FormEditTopic() {
                   <Loader2 className="h-4 w-2 animate-spin" />
                 </span>
               ) : (
-                <span>{(areThereQuestions && data.length) || 0}</span>
+                <span>{(areThereQuestions && data.questions.length) || 0}</span>
               )}
             </Badge>
           </Link>

@@ -11,16 +11,13 @@ export async function GET(req: Request) {
 
   const { searchParams } = new URL(req.url);
 
-  const take = Number(searchParams.get("take")) || 4;
+  const take = Number(searchParams.get("take")) || 8;
   const skip = Number(searchParams.get("skip")) || 0;
 
   try {
     const allSections = await prisma.sections.findMany({
       skip,
       take,
-      orderBy: {
-        updateDate: "asc",
-      },
     });
     allSections.length === 0 && (await init());
 

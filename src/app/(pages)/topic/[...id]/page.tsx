@@ -8,12 +8,15 @@ import {
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { MessageCircleQuestion } from "lucide-react";
 import { PaginationComponentPages } from "@/components/molecules";
-export default async function TopicPage({ params }: TopicProps) {
-  const questionsAsks = await questionAsks(params.id[0] as number);
+export default async function TopicPage({ params, searchParams }: TopicProps) {
+  const id = params.id[0] as number;
+  const skip = Number(searchParams.skip);
+  const take = (searchParams.take && Number(searchParams.take)) || 6;
+  const questionsAsks = await questionAsks(id, skip, take);
 
   return (
     <>
-      <div className="py-10 gap-10 sm:gap-4 grid sm:grid-cols-1  md:grid-cols-2">
+      <div className="py-10 gap-10 sm:gap-4 grid sm:grid-cols-1  md:grid-cols-1">
         {questionsAsks &&
           questionsAsks.questions &&
           questionsAsks.questions.map((question: QuestionsAsksType) => (

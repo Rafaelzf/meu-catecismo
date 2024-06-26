@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { PageSections } from "@/components/molecules";
 import { revalidatePath } from "next/cache";
 import { getSections } from "./actions/sections";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
+import { BookMarked, Squirrel, ImageUp } from "lucide-react";
 import Image from "next/image";
 export default async function Home() {
   const sections = await getSections();
@@ -18,7 +18,7 @@ export default async function Home() {
             <Image
               src="/ilustrations/jesusFace.png"
               alt="Image"
-              className="rounded-md object-cover"
+              className="rounded-md object-cover opacity-50"
               fill
             />
           </AspectRatio>
@@ -27,17 +27,8 @@ export default async function Home() {
           O objetivo principal desse catecismo de bolso não é substituir os
           métodos tradicionais de ensino{" "}
           <strong>estabelecidos pelo magistério da Igreja</strong>. Mas antes
-          disseminar e resumir o{" "}
-          <Link
-            className="text-orange-800 font-bold"
-            href="https://www.editorasantacruz.com.br/livros/catecismo-maior-de-sao-pio-xhttps://www.editorasantacruz.com.br/livros/catecismo-maior-de-sao-pio-x"
-            target="_blank"
-          >
-            Catecismo de São Pio X
-          </Link>
-          , esse que foi uma providencial iniciativa deste Santo Papa, de alma
-          profundamente pastoral, em divulgar um catecismo simples, breve,
-          popular e de uso uniforme por todos os católicos.
+          uma tentativa de disseminar de maneira digital e online as verdades da
+          verdadeira doutrina de Cristo.
         </p>
       </div>
       {sections.sections.length ? (

@@ -18,6 +18,7 @@ export default async function Section({ params, searchParams }: SectionProps) {
   const take = (searchParams.take && Number(searchParams.take)) || 6;
 
   const topics = await getTopics(idSection, skip, take);
+
   return (
     <>
       {topics && topics.topics.length === 0 && (
@@ -70,6 +71,20 @@ export default async function Section({ params, searchParams }: SectionProps) {
                       Ler sobre
                     </Button>
                   </Link>
+                  {/* {topic.questionsAsks?.length ? (
+                    <Link href={`/topic/${topic.id}`} className="w-full block">
+                      <Button className="w-full bg-primary text-primary-foreground hover:bg-destructive">
+                        Ler sobre
+                      </Button>
+                    </Link>
+                  ) : (
+                    <Button
+                      className="w-full bg-slate-200 text-slate-500 "
+                      disabled
+                    >
+                      Ainda sem conteúdo
+                    </Button>
+                  )} */}
                 </CardFooter>
               </Card>
             ))}

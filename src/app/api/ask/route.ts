@@ -39,7 +39,7 @@ export async function DELETE(req: Request) {
     return new Response("Method not allowed", { status: 405 });
   }
   const body = await req.json();
-  console.log("Deleting", body);
+
   try {
     const user = await prisma.ask.delete({
       where: { id: body.id },

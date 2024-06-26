@@ -12,7 +12,7 @@ export async function GET(req: Request) {
 
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("topicId");
-  const take = Number(searchParams.get("take")) || 4;
+  const take = Number(searchParams.get("take")) || 6;
   const skip = Number(searchParams.get("skip")) || 0;
 
   try {
@@ -22,18 +22,12 @@ export async function GET(req: Request) {
       allQuestions = await prisma.questionsAsks.findMany({
         skip,
         take,
-        orderBy: {
-          updateDate: "asc",
-        },
       });
     } else {
       allQuestions = await prisma.questionsAsks.findMany({
         skip,
         take,
         where: { topicId: Number(id) },
-        orderBy: {
-          updateDate: "asc",
-        },
         include: {
           asks: true,
         },

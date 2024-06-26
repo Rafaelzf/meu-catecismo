@@ -8,8 +8,8 @@ export const createFormSchema = {
     .min(3, {
       message: "O título deve conter no mínimo 3 caracteres.",
     })
-    .max(20, {
-      message: "O título deve conter no máximo 20 caracteres.",
+    .max(50, {
+      message: "O título deve conter no máximo 50 caracteres.",
     }),
   image: z.any(),
   message: z
@@ -17,7 +17,7 @@ export const createFormSchema = {
     .min(10, {
       message: "A mensagem deve conter no mínimo 10 caracteres.",
     })
-    .max(100, {
-      message: "A mensagem deve conter no máximo 100 caracteres.",
+    .max(200, {
+      message: "A mensagem deve conter no máximo 200 caracteres.",
     }),
 };

@@ -67,8 +67,11 @@ function FormEdit() {
     if (infoSection?.icon) {
       imageFile = infoSection?.icon;
     } else {
-      const editImage = createform.getValues("image")[0];
-      imageFile = await uploadImage(editImage);
+      const editImage = createform.getValues("image")
+        ? createform.getValues("image")[0]
+        : null;
+
+      imageFile = editImage ? await uploadImage(editImage) : undefined;
     }
 
     const sendData: SendSection = {

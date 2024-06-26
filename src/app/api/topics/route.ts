@@ -12,7 +12,7 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
 
   const parentSectionId = searchParams.get("parentSectionId");
-  const take = Number(searchParams.get("take")) || 4;
+  const take = Number(searchParams.get("take")) || 6;
   const skip = Number(searchParams.get("skip")) || 0;
 
   try {
@@ -22,9 +22,6 @@ export async function GET(req: Request) {
       allTopics = await prisma.topic.findMany({
         skip,
         take,
-        orderBy: {
-          updateDate: "asc",
-        },
       });
     } else {
       allTopics = await prisma.topic.findMany({
