@@ -6,7 +6,7 @@ import {
 } from "@/components/molecules/Topic/types";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { MessageCircleQuestion } from "lucide-react";
+import { ArrowBigLeft, MessageCircleQuestion } from "lucide-react";
 import { PaginationComponentPages } from "@/components/molecules";
 export default async function TopicPage({ params, searchParams }: TopicProps) {
   const id = params.id[0] as number;
@@ -56,6 +56,9 @@ export default async function TopicPage({ params, searchParams }: TopicProps) {
 
       <div className="text-xs text-muted-foreground w-full mt-10  rounded-lg border border-zinc-200 bg-white py-5">
         <PaginationComponentPages {...questionsAsks.metadatas} />
+        <div>
+   
+        </div>
       </div>
     </>
   );

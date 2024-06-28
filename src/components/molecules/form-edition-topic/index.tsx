@@ -1,6 +1,6 @@
 "use client";
 import { useContext, useState } from "react";
-import Link from "next/link";
+
 import { z } from "zod";
 import { Loader2 } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -36,11 +36,6 @@ function FormEditTopic() {
     useContext(TopicsContext);
   const currentTopic = topics.find((topic) => topic.id === idTopic);
   const { trigger } = useSWRMutation("topics", () => getTopics(idSection));
-  const { data, isValidating, error } = useSWR(
-    currentTopic ? `questionAsks-${currentTopic.id}` : undefined,
-    () => questionAsks(currentTopic?.id),
-    { revalidateOnFocus: false }
-  );
 
   const edit = (sendData: Topic, del: boolean = false) => {
     if (!sendData) return;
@@ -55,9 +50,6 @@ function FormEditTopic() {
       })
       .finally(() => !del && setShowModal(false));
   };
-
-  const areThereQuestions =
-    data && data.questions.length > 0 && !error && !isValidating;
 
   const defaultSendValues = {
     title: currentTopic?.title || "",
@@ -221,25 +213,6 @@ function FormEditTopic() {
               )}
             />
           )}
-        </div>
-        <div className="flex justify-end items-center align-middle">
-          <Link
-            href={`/admin/topics/topic/${currentTopic?.id}/${currentTopic?.title}`}
-            className=" p-3 rounded-lg border-0 text-emerald-500 hover:text-emerald-500 
-            flex justify-end items-center align-middle gap-3 hover:bg-emerald-50"
-            onClick={() => setShowModal(false)}
-          >
-            <span>Perguntas e respostas</span>
-            <Badge className="bg-orange-500">
-              {isValidating ? (
-                <span>
-                  <Loader2 className="h-4 w-2 animate-spin" />
-                </span>
-              ) : (
-                <span>{(areThereQuestions && data.questions.length) || 0}</span>
-              )}
-            </Badge>
-          </Link>
         </div>
 
         <div className="flex justify-end align-middle gap-5">

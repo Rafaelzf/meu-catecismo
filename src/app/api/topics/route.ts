@@ -22,14 +22,17 @@ export async function GET(req: Request) {
       allTopics = await prisma.topic.findMany({
         skip,
         take,
+        include: {
+          questionsAsks: true,
+        },
       });
     } else {
       allTopics = await prisma.topic.findMany({
         skip,
         take,
         where: { parentSectionId: Number(parentSectionId) },
-        orderBy: {
-          updateDate: "asc",
+        include: {
+          questionsAsks: true,
         },
       });
     }

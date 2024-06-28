@@ -7,18 +7,18 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 
-import { Bug } from "lucide-react";
+import { ArrowBigLeft, Bug } from "lucide-react";
 import useSWR from "swr";
 import { getTopics } from "@/app/actions/topics";
 import { PaginationComponent, TopicsListAdmin } from "@/components/molecules";
 import { HeaderTopics, BoxError, Skeleton } from "@/components/atoms";
 import { useCallback, useContext, useEffect } from "react";
-
+import { Button } from "@/components/ui/button";
 import TopicsContext from "@/app/store/topics-context";
 import useSWRMutation from "swr/mutation";
 import { TopicProps } from "@/app/(pages)/topic/[...id]/types";
 import AdminContext from "@/app/store/admin-context";
-
+import { useRouter } from "next/navigation";
 const ModalTopic = dynamic(() => import("@/components/molecules/modal-topic"), {
   ssr: false,
 });
@@ -26,6 +26,7 @@ const ModalTopic = dynamic(() => import("@/components/molecules/modal-topic"), {
 export default function RenderTopics({ params }: TopicProps) {
   const { setTopics, setIdSection } = useContext(TopicsContext);
   const { pagination } = useContext(AdminContext);
+  const router = useRouter();
 
   const { data, error, isValidating } = useSWR(
     "topics",
@@ -37,6 +38,10 @@ export default function RenderTopics({ params }: TopicProps) {
     getTopics(params.id[0] as number, pagination.skip)
   );
   const refetch = useCallback(async () => await trigger(), [trigger]);
+
+  const handleGoBack = () => {
+    router.back();
+  };
 
   useEffect(() => {
     if (!pagination) return;
@@ -83,6 +88,18 @@ export default function RenderTopics({ params }: TopicProps) {
             <CardFooter className="text-xs text-muted-foreground">
               <div className="flex flex-row justify-between content-center  w-full h-full">
                 <PaginationComponent {...data.metadatas} />
+                <div>
+                  <Button
+                    size="sm"
+                    className="h-8 gap-1  hover:bg-destructive"
+                    onClick={handleGoBack}
+                  >
+                    <ArrowBigLeft className="h-3.5 w-3.5" />
+                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                      Voltar
+                    </span>
+                  </Button>
+                </div>
               </div>
             </CardFooter>
           </>

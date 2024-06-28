@@ -1,3 +1,5 @@
+import { Topic } from "@prisma/client";
+
 export type Section = {
   id: number;
   title: string;
@@ -7,6 +9,7 @@ export type Section = {
   icon?: string;
   createDate?: string;
   updateDate?: string;
+  topics: Topic[];
 };
 
 export type SendSection = {

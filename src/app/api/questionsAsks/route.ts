@@ -22,6 +22,9 @@ export async function GET(req: Request) {
       allQuestions = await prisma.questionsAsks.findMany({
         skip,
         take,
+        include: {
+          asks: true,
+        },
       });
     } else {
       allQuestions = await prisma.questionsAsks.findMany({

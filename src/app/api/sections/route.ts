@@ -18,6 +18,9 @@ export async function GET(req: Request) {
     const allSections = await prisma.sections.findMany({
       skip,
       take,
+      include: {
+        topics: true,
+      },
     });
     allSections.length === 0 && (await init());
 

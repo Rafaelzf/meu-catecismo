@@ -11,7 +11,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Bug, MessageCircleQuestion, Pencil, Eraser } from "lucide-react";
+import {
+  Bug,
+  MessageCircleQuestion,
+  Pencil,
+  Eraser,
+  ArrowBigLeft,
+} from "lucide-react";
 
 import {
   Ask,
@@ -27,7 +33,9 @@ import QuestionsContext from "@/app/store/questions-context";
 import AdminContext from "@/app/store/admin-context";
 import useSWRMutation from "swr/mutation";
 import { QuestionsAsksProps } from "@/app/(pages)/admin/topics/types";
+import { useRouter } from "next/navigation";
 export default function RenderQuestions({ params }: QuestionsAsksProps) {
+  const router = useRouter();
   const { pagination } = useContext(AdminContext);
   const { setShowModal, setAction, setIdTopic } = useContext(TopicsContext);
   const { setQuestions, setQuestion } = useContext(QuestionsContext);
@@ -69,6 +77,10 @@ export default function RenderQuestions({ params }: QuestionsAsksProps) {
     questionAsks(params.slug[0] as number, pagination.skip)
   );
   const refetch = useCallback(async () => await trigger(), [trigger]);
+
+  const handleGoBack = () => {
+    router.back();
+  };
 
   useEffect(() => {
     if (!pagination) return;
@@ -172,6 +184,18 @@ export default function RenderQuestions({ params }: QuestionsAsksProps) {
             {data && data.questions.length > 0 && !isValidating && !error && (
               <PaginationComponent {...data.metadatas} />
             )}
+            <div>
+              <Button
+                size="sm"
+                className="h-8 gap-1  hover:bg-destructive"
+                onClick={handleGoBack}
+              >
+                <ArrowBigLeft className="h-3.5 w-3.5" />
+                <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                  Voltar
+                </span>
+              </Button>
+            </div>
           </div>
         </CardFooter>
       </Card>

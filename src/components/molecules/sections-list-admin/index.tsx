@@ -60,12 +60,21 @@ export function SectionsListAdmin({ sections }: { sections: Section[] }) {
                 </DropdownMenu>
               </div>
               <div>
-                <Button
-                  className="p-3 rounded-lg bg-orange-500 text-white hover:bg-orange-700"
-                  onClick={() => goTopic(section.id)}
-                >
-                  Ver tópicos
-                </Button>
+                {section.topics.length ? (
+                  <Button
+                    className="p-3 rounded-lg bg-orange-500 text-white hover:bg-orange-700"
+                    onClick={() => goTopic(section.id)}
+                  >
+                    Ver tópicos
+                  </Button>
+                ) : (
+                  <Button
+                    className="p-3 rounded-lg bg-zinc-200 text-zinc-500 hover:bg-orange-700"
+                    disabled
+                  >
+                    Ver tópicos
+                  </Button>
+                )}
               </div>
             </div>
           ))}
