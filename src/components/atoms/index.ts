@@ -7,6 +7,7 @@ import BoxError from "./box-error";
 import Skeleton from "./skeleton";
 import EmptyBox from "./empty-box";
 import TopicActionsButtons from "./topic-actions-buttons";
+import BackBtn from "./back-btn";
 
 export {
   ButtonCreate,
@@ -18,4 +19,5 @@ export {
   BoxError,
   EmptyBox,
   Skeleton,
+  BackBtn,
 };

@@ -7,18 +7,17 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 
-import { ArrowBigLeft, Bug } from "lucide-react";
 import useSWR from "swr";
 import { getTopics } from "@/app/actions/topics";
 import { PaginationComponent, TopicsListAdmin } from "@/components/molecules";
-import { HeaderTopics, BoxError, Skeleton } from "@/components/atoms";
+import { HeaderTopics, BoxError, Skeleton, BackBtn } from "@/components/atoms";
 import { useCallback, useContext, useEffect } from "react";
-import { Button } from "@/components/ui/button";
 import TopicsContext from "@/app/store/topics-context";
 import useSWRMutation from "swr/mutation";
 import { TopicProps } from "@/app/(pages)/topic/[...id]/types";
 import AdminContext from "@/app/store/admin-context";
 import { useRouter } from "next/navigation";
+import { Bug } from "lucide-react";
 const ModalTopic = dynamic(() => import("@/components/molecules/modal-topic"), {
   ssr: false,
 });
@@ -89,16 +88,7 @@ export default function RenderTopics({ params }: TopicProps) {
               <div className="flex flex-row justify-between content-center  w-full h-full">
                 <PaginationComponent {...data.metadatas} />
                 <div>
-                  <Button
-                    size="sm"
-                    className="h-8 gap-1  hover:bg-destructive"
-                    onClick={handleGoBack}
-                  >
-                    <ArrowBigLeft className="h-3.5 w-3.5" />
-                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                      Voltar
-                    </span>
-                  </Button>
+                  <BackBtn />
                 </div>
               </div>
             </CardFooter>

@@ -5,9 +5,16 @@ import {
   QuestionsAsks as QuestionsAsksType,
 } from "@/components/molecules/Topic/types";
 
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { ArrowBigLeft, MessageCircleQuestion } from "lucide-react";
+import { AlertDescription } from "@/components/ui/alert";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { MessageCircleQuestion } from "lucide-react";
 import { PaginationComponentPages } from "@/components/molecules";
+import { BackBtn } from "@/components/atoms";
 export default async function TopicPage({ params, searchParams }: TopicProps) {
   const id = params.id[0] as number;
   const skip = Number(searchParams.skip);
@@ -16,49 +23,53 @@ export default async function TopicPage({ params, searchParams }: TopicProps) {
 
   return (
     <>
-      <div className="py-10 gap-10 sm:gap-4 grid sm:grid-cols-1  md:grid-cols-1">
+      <div className="gap-10 sm:gap-4 grid sm:grid-cols-1  md:grid-cols-1 bg-white p-5 rounded-lg border border-zinc-200">
         {questionsAsks &&
           questionsAsks.questions &&
           questionsAsks.questions.map((question: QuestionsAsksType) => (
-            <Alert
+            <Accordion
+              type="single"
+              collapsible
+              className="w-full "
               key={question.id}
-              className="mb-10 shadow-lg shadow-zinc-500/40"
             >
-              <AlertTitle className="mb-5 flex justify-between items-center align-middle gap-5">
-                <div className="flex justify-start items-center align-middle gap-5">
-                  <MessageCircleQuestion className="h-6 w-6 text-primary" />
-                  <h5>{question.question}</h5>
-                </div>
-              </AlertTitle>
-              {question.asks.length > 0 ? (
-                <ul>
-                  {question.asks.map((ask: Ask) => (
-                    <li
-                      key={ask.id}
-                      className="list-disc mx-8 mb-4 text-zinc-500"
-                    >
-                      <AlertDescription>{ask.ask}</AlertDescription>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <ul>
-                  <li className="list-disc mx-8 mb-4 text-orange-500">
-                    <AlertDescription>
-                      Essa pergunta ainda não possuí respostas cadastradas.
-                    </AlertDescription>
-                  </li>
-                </ul>
-              )}
-            </Alert>
+              <AccordionItem
+                value={(question.id && question.id.toString()) || ""}
+              >
+                <AccordionTrigger className="text-orange-800">
+                  {question.question}
+                </AccordionTrigger>
+                <AccordionContent>
+                  {question.asks.length > 0 ? (
+                    <ul>
+                      {question.asks.map((ask: Ask) => (
+                        <li
+                          key={ask.id}
+                          className="list-disc mx-8 mb-4 text-zinc-500 text-base"
+                        >
+                          <AlertDescription>{ask.ask}</AlertDescription>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <ul>
+                      <li className="list-disc mx-8 mb-4 text-orange-500">
+                        <AlertDescription>
+                          Essa pergunta ainda não possuí respostas cadastradas.
+                        </AlertDescription>
+                      </li>
+                    </ul>
+                  )}
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           ))}
       </div>
 
-      <div className="text-xs text-muted-foreground w-full mt-10  rounded-lg border border-zinc-200 bg-white py-5">
+      <div className="flex text-xs text-muted-foreground w-full mt-10  rounded-lg border border-zinc-200 bg-white p-5">
         <PaginationComponentPages {...questionsAsks.metadatas} />
-        <div>
-   
-        </div>
+
+        <BackBtn />
       </div>
     </>
   );

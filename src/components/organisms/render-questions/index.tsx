@@ -3,7 +3,7 @@
 import useSWR from "swr";
 
 import { questionAsks } from "@/app/actions/questionsAsks";
-import { BoxError, Skeleton } from "@/components/atoms";
+import { BackBtn, BoxError, Skeleton } from "@/components/atoms";
 import {
   Card,
   CardContent,
@@ -11,13 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Bug,
-  MessageCircleQuestion,
-  Pencil,
-  Eraser,
-  ArrowBigLeft,
-} from "lucide-react";
+import { Bug, MessageCircleQuestion, Pencil, Eraser } from "lucide-react";
 
 import {
   Ask,
@@ -185,16 +179,7 @@ export default function RenderQuestions({ params }: QuestionsAsksProps) {
               <PaginationComponent {...data.metadatas} />
             )}
             <div>
-              <Button
-                size="sm"
-                className="h-8 gap-1  hover:bg-destructive"
-                onClick={handleGoBack}
-              >
-                <ArrowBigLeft className="h-3.5 w-3.5" />
-                <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                  Voltar
-                </span>
-              </Button>
+              <BackBtn />
             </div>
           </div>
         </CardFooter>

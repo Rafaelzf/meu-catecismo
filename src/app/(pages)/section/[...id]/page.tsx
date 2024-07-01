@@ -12,6 +12,7 @@ import { BookMarked, Squirrel, ImageUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { PaginationComponentPages } from "@/components/molecules";
+import { BackBtn } from "@/components/atoms";
 export default async function Section({ params, searchParams }: SectionProps) {
   const idSection = params.id[0] as number;
   const skip = Number(searchParams.skip);
@@ -84,8 +85,9 @@ export default async function Section({ params, searchParams }: SectionProps) {
               </Card>
             ))}
           </div>
-          <div className="text-xs text-muted-foreground w-full mt-10  rounded-lg border border-zinc-200 bg-white py-5">
+          <div className="flex text-xs text-muted-foreground w-full mt-10  rounded-lg border border-zinc-200 bg-white p-5">
             <PaginationComponentPages {...topics.metadatas} />
+            <BackBtn />
           </div>
         </>
       )}
